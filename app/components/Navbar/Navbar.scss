@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.Navbar {
+  background-color: $navbar;
+  padding: 10px;
+  display: flex;
+  box-sizing: border-box;
+  &-Brand {
+    a {
+      color: $primary;
+      &:hover {
+        color: $secondary;
+      }
+    }
+  }
+
+}
