@@ -11,14 +11,12 @@
 
 1. Install dependencies through npm:
 
-  `npm install codeword --save`
+  `npm install`
 
 2. Run development server:
 
   `npm start`
 
-
-<!-- ### [Docs Page](http://idealgardens.github.com/codeword) -->
 
 [travis-image]: https://img.shields.io/travis/idealgardens/codeword/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/idealgardens/codeword

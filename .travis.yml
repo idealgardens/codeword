@@ -15,5 +15,5 @@ deploy:
   skip_cleanup: true
   provider: heroku
   api_key:
-    secure: $HEROKU
-  app: idealgardens
+    secure: $HEROKU_KEY
+  app: $HEROKU_APP

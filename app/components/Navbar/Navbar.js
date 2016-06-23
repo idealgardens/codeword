@@ -67,7 +67,7 @@ export default class Navbar extends Component {
     ) : mainMenu
     return (
       <AppBar
-        title={<Link className="Navbar-Brand" to={ brandLinkLoc }>Ideal Gardens</Link>}
+        title={<Link className="Navbar-Brand" to={ brandLinkLoc }>Codeword Dash</Link>}
         className="Navbar"
         showMenuIconButton={ false }
         iconElementRight={ rightMenu }
