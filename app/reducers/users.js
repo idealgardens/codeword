@@ -23,7 +23,7 @@ export default function users (state = {
         })
       break
     case GET_SHEETS_SUCCESS:
-      if (!action.payload.results.timesheets) {
+      if (!action.payload || !action.payload.results.timesheets) {
         console.error('No timesheets found')
         return state
       }

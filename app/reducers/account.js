@@ -29,7 +29,7 @@ export default function account (state = {
         })
       break
     case LOGIN_SUCCESS:
-      if (!action.payload.results.timesheets) {
+      if (!action.payload || !action.payload.results.timesheets) {
         console.error('No timesheets found')
         return state
       }

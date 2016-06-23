@@ -48,9 +48,9 @@ export default class Navbar extends Component {
       />
     )
     const mainMenu = (
-      <div className="Navbar-Buttons">
-        <FlatButton style={ buttonStyle } label="Sign Up" onClick={ this.selectItem.bind(this, null, 'signup') } />
-        <FlatButton style={ buttonStyle } label="Login" onClick={ this.selectItem.bind(this, null, 'login') } />
+      <div className="Navbar-Main-Menu">
+        <FlatButton label="Sign Up" style={ buttonStyle } onClick={ this.selectItem.bind(this, null, 'signup') } />
+        <FlatButton label="Login" style={ buttonStyle } onClick={ this.selectItem.bind(this, null, 'login') } />
       </div>
     )
     const rightMenu = username ? (
@@ -67,7 +67,7 @@ export default class Navbar extends Component {
     ) : mainMenu
     return (
       <AppBar
-        title={<Link className="Navbar-Brand" to={ brandLinkLoc }>Codeword Dash</Link>}
+        title={<Link className="Navbar-Brand" to={ brandLinkLoc }>codeword</Link>}
         className="Navbar"
         showMenuIconButton={ false }
         iconElementRight={ rightMenu }

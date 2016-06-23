@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as Actions from '../../actions'
 import { Link } from 'react-router'
+
+// styles
 import './Account.scss'
 
-class Acccount extends Component {
+// firebase
+import firebaseUtil from '../../utils/firebase'
+
+
+export default class Acccount extends Component {
+
   constructor (props) {
     super(props)
   }
@@ -40,16 +44,3 @@ class Acccount extends Component {
   }
 }
 
-// Place state of redux store into props of component
-const mapStateToProps = (state) => {
-  return {
-    account: state.account ? state.entities.accounts[state.account.id] : null,
-    router: state.router
-  }
-}
-
-
-// Place action methods into props
-const mapDispatchToProps = (dispatch) => bindActionCreators(Actions, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Acccount)

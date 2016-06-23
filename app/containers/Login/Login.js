@@ -1,35 +1,30 @@
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { firebase, helpers } from 'redux-react-firebase'
 
-// Components
+// components
 import LoginForm from '../../components/LoginForm/LoginForm'
+
+// material-ui components
 import Paper from 'material-ui/lib/paper'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import Snackbar from 'material-ui/lib/snackbar'
 import RaisedButton from 'material-ui/lib/raised-button'
 import FontIcon from 'material-ui/lib/font-icon'
 
-const { isLoaded, isEmpty,  dataToJS, pathToJS } = helpers
-
+// styles
 import './Login.scss'
 
-// Props decorators
-@firebase()
-@connect(
-  ({firebase}) => ({
-    authError: pathToJS(firebase, 'authError'),
-    profile: pathToJS(firebase, 'profile')
-  })
-)
+// firebase
+import firebase from '../../utils/firebase'
+
+
 export default class Login extends Component {
   constructor (props) {
     super(props)
     this.state = {
       snackCanOpen: false,
-      errors: { username: null, password: null }
+      errors: { username: null, password: null },
+      errorMessage: null
     }
   }
 
@@ -45,17 +40,41 @@ export default class Login extends Component {
   handleRequestClose = () => this.setState({ snackCanOpen: false })
 
   render () {
-    const { isLoading, snackCanOpen } = this.state
+    const { isLoading, snackCanOpen, errorMessage } = this.state
     const { authError } = this.props
     const handleLogin = loginData => {
       this.setState({
         snackCanOpen: true,
         isLoading: true
       })
-      // event({ category: 'User', action: 'Email Login' })
-      this.props.firebase.login(loginData)
-        .then(() => this.context.router.push('/sheets'))
+  
+  const { email, password, provider } = loginData
+    let newState = {
+      isLoading: false,
+      errors: { username: null, email: null }
     }
+    if (!provider && (!email || !password)) {
+      newState.errors.email = email ? 'Email is required' : null
+      newState.errors.password = password ? 'Password is required' : null
+      console.error('missing info', loginData, email, password)
+      return this.setState(newState)
+    }
+    if (email && password) {
+      firebase.auth()
+        .signInWithEmailAndPassword(email, password)
+        .catch((error) => {
+          if (error) {
+            console.error('Error logging in:', error)
+            newState.errorMessage = error.message || 'Error with login'
+          } else {
+            console.log('time to redirect or login?', error)
+          }
+          this.setState(newState)
+        })
+    }
+    }
+    const closeToast = () => this.setState({ snackCanOpen: false })
+
 
     if (isLoading) {
       return (
@@ -80,11 +99,6 @@ export default class Login extends Component {
           secondary={ true }
           onTouchTap={ handleLogin.bind(this, { provider: 'google', type: 'popup' }) }
         />
-        <RaisedButton
-          label="Sign in With GitHub"
-          secondary={ true }
-          onTouchTap={ handleLogin.bind(this, { provider: 'github', type: 'popup' }) }
-        />
         <div className="Login-Signup">
           <span className="Login-Signup-Label">
             Need an account?
@@ -94,8 +108,9 @@ export default class Login extends Component {
           </Link>
         </div>
         <Snackbar
-          open={ isLoaded(authError) && !isEmpty(authError) && snackCanOpen }
-          message={ authError ? authError.toString() : 'Error' }
+          open={ snackCanOpen && typeof errorMessage !== 'null' }
+          message={ errorMessage }
+          
           action="close"
           autoHideDuration={ 3000 }
           onRequestClose={ this.handleRequestClose }

@@ -1,32 +1,30 @@
 import { capitalize, find } from 'lodash'
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import * as Actions from '../../actions'
-// Components
+
+// components
 import SignupForm from '../../components/SignupForm/SignupForm'
+
+// material-ui components
 import Paper from 'material-ui/lib/paper'
 import RaisedButton from 'material-ui/lib/raised-button'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import Snackbar from 'material-ui/lib/snackbar'
-import { firebase, helpers } from 'redux-react-firebase'
 
+// firebase
+import firebaseUtil from '../../utils/firebase'
+
+// styles
 import './Signup.scss'
-const {isLoaded, isEmpty,  dataToJS, pathToJS} = helpers
 
-@firebase()
-@connect(
-  ({firebase}) => ({
-    authError: pathToJS(firebase, 'authError'),
-  })
-)
+
 export default class Signup extends Component {
   constructor (props) {
     super(props)
     this.state = {
       errors: { username: null, password: null },
-      snackCanOpen: false
+      snackCanOpen: false,
+      errorMessage: null
     }
   }
 
@@ -40,7 +38,8 @@ export default class Signup extends Component {
       username: null,
       email: null,
       name: null,
-      snackCanOpen: false
+      snackCanOpen: false,
+      errorMessage: null
     })
 
   render () {
@@ -52,20 +51,33 @@ export default class Signup extends Component {
      * @description Call signup through redux-devshare action
      */
     const handleSignup = signupData => {
-      const { username, email, provider } = signupData
+      const { username, email, provider, password } = signupData
       this.setState({ snackCanOpen: true, isLoading: true })
-      console.log('signup data:', signupData)
-      if (provider) {
-        return this.props.firebase.login(signupData)
-          .then(response => {
-            console.log('response:', response)
-            this.props.firebase.createUser(response, response)
-          })
-          .catch(error => {
-            console.error('error signing up:', error, error.toString())
-          })
+      
+      let newState = {
+          isLoading: false,
+          errors: { username: null, email: null }
+        }
+      if (!provider && (!email || !password)) {
+        newState.errors.email = email ? 'Email is required' : null
+        newState.errors.password = password ? 'Password is required' : null
+        return this.setState(newState)
       }
-      this.props.firebase.createUser(signupData, { username, email })
+      if (email && password) {
+        firebase.auth()
+          .createUserWithEmailAndPassword(email, password)
+          .catch((error) => {
+            if (error) {
+              console.error('Error logging in:', error)
+              newState.errorMessage = error.message || 'Error with login'
+            } else {
+              console.log('time to redirect or login?', error)
+            }
+            this.setState(newState)
+          })
+      } else {
+        console.warn('other signups not currently supported', provider)
+      }
     }
 
     const closeToast = () => this.setState({ snackCanOpen: false })
@@ -99,8 +111,8 @@ export default class Signup extends Component {
           <Link className="Signup-Login-Link" to="/login">Login</Link>
         </div>
         <Snackbar
-          open={ error !== null && this.state.snackCanOpen }
-          message={ error || 'Signup error' }
+          open={ this.state.snackCanOpen }
+          message={ this.state.errorMessage || 'Signup error'}
           action="close"
           autoHideDuration={ 3000 }
           onRequestClose={ closeToast }

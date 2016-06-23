@@ -20,7 +20,7 @@ export default function sheets (state = {}, action) {
         error: action.payload
       })
     case GET_SHEETS_SUCCESS:
-      if (!action.payload.results.timesheets) {
+      if (!action || !action.payload) {
         console.error('No timesheets found')
         return state
       }

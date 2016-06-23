@@ -4,13 +4,13 @@ import rootReducer from '../reducers'
 // import createHistory from 'history/lib/createBrowserHistory'
 import thunkMiddleware from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
-import {reduxReactFirebase} from 'redux-react-firebase'
+// import {reduxReactFirebase} from 'redux-react-firebase'
 
 const createStoreWithMiddleware = compose(
   // Save for redux middleware
-  reduxReactFirebase('https://idealgardens.firebaseio.com/', {
-    userProfile: 'users' // path where user profiles are stored
-  }),
+  // reduxReactFirebase('https://idealgardens.firebaseio.com/', {
+  //   userProfile: 'users' // path where user profiles are stored
+  // }),
   applyMiddleware(thunkMiddleware, apiMiddleware),
   // reduxReactRouter({
   //   createHistory
