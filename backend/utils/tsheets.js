@@ -1,10 +1,9 @@
 import TSheets from 'tsheets-client'
+import { timesheets } from 'tsheets-client'
 import { getEnvVar } from './env'
-const defaultStartDate = '2014-01-01' // end is today by default
-
-// attach tsheets token to an object
-export const attachToken = (obj) =>
-  Object.assign({}, obj, { api_token: getEnvVar('TSHEETS_TOKEN') })
+import request from 'request'
+const defaultStartDate = '2010-01-01' // end is today by default
+const apiBaseUri = 'https://rest.tsheets.com/api/v1'
 
 // Creates current time in tsheets format
 export const today = () => {
@@ -17,23 +16,38 @@ export const today = () => {
   return `${yyyy}-${mm}-${dd}`
 }
 
-// Creates a query object needed for tSheets
-export const createQuery = (queryParams = {}) => {
-  let { start_date, end_date, api_token } = queryParams || {}
-  if (!start_date) start_date = defaultStartDate
-  if (!end_date) end_date = today()
-  return api_token
-    ? { start_date, end_date, api_token }
-    : attachToken({ start_date, end_date })
-}
+/**
+ * Makes an authenticated request to the TSheets API.
+ * @param {Object} params Token, endpoint, method, body_params.
+ * @return {Promise}
+ */
+export const makeRequest = (params) => {
+  const { endpoint, method, body, qs } = params
 
-// Gets timesheets while attaching token to query and wrapping in promise
-export const getSheets = (q) =>
-  new Promise((resolve, reject) =>
-    TSheets.getTimesheets(
-      createQuery(q),
-      (err, sheets) => err
-        ? reject(err)
-        : resolve(sheets)
-    )
-  )
+  let opts = {
+    url: apiBaseUri + endpoint,
+    qs: qs || {},
+    method: method || 'get',
+    json: true,
+    headers: {
+      Authorization: `Bearer ${getEnvVar('TSHEETS_TOKEN')}`
+    }
+  }
+  if (body && Object.keys(body).length) opts.json = { data: body }
+
+  if (!opts.qs.start_date) opts.qs.start_date = defaultStartDate
+  if(!opts.qs.end_date) opts.qs.end_date = today()
+
+  return new Promise((resolve, reject) => {
+    request(opts, (err, res, json) => {
+      console.log('error:', err)
+      console.log('res:', res.body)
+      if (err || res.body.error) return reject(err || res.body.error)
+      if (res.statusCode >= 300) {
+        return reject(new Error('Invalid response, statusCode=' + res.statusCode))
+      }
+      console.log('response code:', res.statusCode)
+      resolve(json)
+    })
+  })
+}
