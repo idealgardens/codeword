@@ -36,17 +36,14 @@ export const makeRequest = (params) => {
   if (body && Object.keys(body).length) opts.json = { data: body }
 
   if (!opts.qs.start_date) opts.qs.start_date = defaultStartDate
-  if(!opts.qs.end_date) opts.qs.end_date = today()
+  if (!opts.qs.end_date) opts.qs.end_date = today()
 
   return new Promise((resolve, reject) => {
     request(opts, (err, res, json) => {
-      console.log('error:', err)
-      console.log('res:', res.body)
       if (err || res.body.error) return reject(err || res.body.error)
       if (res.statusCode >= 300) {
         return reject(new Error('Invalid response, statusCode=' + res.statusCode))
       }
-      console.log('response code:', res.statusCode)
       resolve(json)
     })
   })

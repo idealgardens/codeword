@@ -15,7 +15,7 @@ import Avatar from 'material-ui/lib/avatar'
 const stockPhotoUrl = 'https://s3.amazonaws.com/kyper-cdn/img/User.png'
 const originSettings = { horizontal: 'right', vertical: 'top' }
 const avatarSize = 50
-const buttonStyle = { color: 'white' }
+const buttonStyle = { color: '#3C4144'  }
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ export default class Navbar extends Component {
     const mainMenu = (
       <div className="Navbar-Main-Menu">
         <FlatButton label="Sign Up" style={ buttonStyle } onClick={ this.selectItem.bind(this, null, 'signup') } />
-        <FlatButton label="Login" style={ buttonStyle } onClick={ this.selectItem.bind(this, null, 'login') } />
+        <FlatButton label="Login" style={ buttonStyle }  onClick={ this.selectItem.bind(this, null, 'login') } />
       </div>
     )
     const rightMenu = username ? (
@@ -68,6 +68,7 @@ export default class Navbar extends Component {
     return (
       <AppBar
         title={<Link className="Navbar-Brand" to={ brandLinkLoc }>codeword</Link>}
+        titleStyle={{color: '#EB8C01'}}
         className="Navbar"
         showMenuIconButton={ false }
         iconElementRight={ rightMenu }
