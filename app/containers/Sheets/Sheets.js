@@ -9,9 +9,10 @@ import TableHeader from 'material-ui/lib/table/table-header'
 import TableRowColumn from 'material-ui/lib/table/table-row-column'
 import TableBody from 'material-ui/lib/table/table-body'
 import CircularProgress from 'material-ui/lib/circular-progress'
-import * as Actions from '../../actions/sheets'
+import * as Actions from '../../actions'
 import './Sheets.scss'
 import { find } from 'lodash'
+
 type Props = {
   users: Array,
   sheets: Array,

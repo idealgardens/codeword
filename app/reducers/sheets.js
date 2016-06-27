@@ -1,8 +1,8 @@
 import {
-  GET_SHEETS_REQUEST,
   GET_SHEETS_SUCCESS,
+  GET_SHEETS_REQUEST,
   GET_SHEETS_FAILURE
-} from '../actions/sheets'
+} from '../constants/ActionTypes'
 
 import { toArray } from 'lodash'
 
