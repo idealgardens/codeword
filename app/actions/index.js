@@ -1,30 +1,14 @@
-export const LOGIN_RESPONSE = 'LOGIN_RESPONSE'
-export const SIGNUP_RESPONSE = 'SIGNUP_RESPONSE'
-export const LOGOUT_RESPONSE = 'LOGOUT_RESPONSE'
-export const AUTH_ERR = 'AUTH_ERR'
+export const GET_SHEETS_SUCCESS = 'GET_SHEETS_SUCCESS'
+export const GET_SHEETS_REQUEST = 'GET_SHEETS_REQUEST'
+export const GET_SHEETS_FAILURE = 'GET_SHEETS_FAILURE'
+import { CALL_API } from 'redux-api-middleware'
 
-export function login (account) {
+export function getSheets () {
   return {
-    type: LOGIN_RESPONSE,
-    account,
-    receivedAt: Date.now()
-  }
-}
-
-export function signup (signupData, account) {
-  return {
-    type: SIGNUP_RESPONSE,
-    signupData,
-    account,
-    receivedAt: Date.now()
-  }
-}
-
-
-export function logout () {
-  return {
-    type: LOGOUT_RESPONSE,
-    account: null,
-    receivedAt: Date.now()
+    [CALL_API]: {
+      endpoint: '/api/sheets',
+      method: 'GET',
+      types: [ GET_SHEETS_REQUEST, GET_SHEETS_SUCCESS, GET_SHEETS_FAILURE ]
+    }
   }
 }

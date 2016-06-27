@@ -1,41 +1,37 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, { Component } from 'react'
 
 // styles
 import './Account.scss'
 
 // firebase
-import firebaseUtil from '../../utils/firebase'
+// import firebaseUtil from '../../utils/firebase'
 
-
+type Props = {
+  account: Object,
+  logout: Function
+}
 export default class Acccount extends Component {
-
-  constructor (props) {
-    super(props)
-  }
-
-  static propTypes = {
-    account: PropTypes.object,
-  };
+  props: Props
 
   render () {
-    const emailTo = `mailto:${this.props.account.email || ''}`
+    const { account, logout } = this.props
+    const emailTo = `mailto:${account.email || ''}`
     return (
       <div className='Acccount'>
         <div className='Acccount-Data'>
           <span className='Acccount-Datapoint Acccount-Username'>
-            { this.props.account.username }
+            {account.username}
           </span>
           <span className='Acccount-Datapoint Acccount-Name'>
-            { this.props.account.name || 'No Name' }
+            {account.name || 'No Name'}
           </span>
           <span className='Acccount-Datapoint Acccount-Role'>
-            { this.props.account.role }
+            {account.role}
           </span>
-          <a className='Acccount-Datapoint Acccount-Email' href={ emailTo }>
-            { this.props.account.email }
+          <a className='Acccount-Datapoint Acccount-Email' href={emailTo}>
+            {account.email}
           </a>
-          <button className='Button' onClick={ this.props.logout }>
+          <button className='Button' onClick={logout}>
             Logout
           </button>
         </div>
@@ -43,4 +39,3 @@ export default class Acccount extends Component {
     )
   }
 }
-

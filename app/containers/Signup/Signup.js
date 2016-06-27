@@ -1,5 +1,4 @@
-import { capitalize, find } from 'lodash'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 
 // components
@@ -17,17 +16,18 @@ import firebaseUtil from '../../utils/firebase'
 // styles
 import './Signup.scss'
 
-
+type Props = {
+  account: Object,
+  isLoading: Boolean
+}
 export default class Signup extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      errors: { username: null, password: null },
-      snackCanOpen: false,
-      errorMessage: null
-    }
-  }
+  props: Props
 
+  state = {
+    errors: { username: null, password: null },
+    snackCanOpen: false,
+    errorMessage: null
+  }
   /**
    * @function reset
    * @description Reset whole state (inputs, errors, snackbar open/close)
@@ -44,27 +44,26 @@ export default class Signup extends Component {
 
   render () {
     const { isLoading } = this.props
-    const { isFetching, error } = this.props.account || {}
 
     /**
      * @function handleSignup
      * @description Call signup through redux-devshare action
      */
     const handleSignup = signupData => {
-      const { username, email, provider, password } = signupData
+      const { email, provider, password } = signupData
       this.setState({ snackCanOpen: true, isLoading: true })
-      
+
       let newState = {
-          isLoading: false,
-          errors: { username: null, email: null }
-        }
+        isLoading: false,
+        errors: { username: null, email: null }
+      }
       if (!provider && (!email || !password)) {
         newState.errors.email = email ? 'Email is required' : null
         newState.errors.password = password ? 'Password is required' : null
         return this.setState(newState)
       }
       if (email && password) {
-        firebase.auth()
+        firebaseUtil.auth()
           .createUserWithEmailAndPassword(email, password)
           .catch((error) => {
             if (error) {
@@ -84,38 +83,38 @@ export default class Signup extends Component {
 
     if (isLoading) {
       return (
-        <div className="Signup">
-          <div className="Signup-Progress">
-            <CircularProgress  mode="indeterminate" />
+        <div className='Signup'>
+          <div className='Signup-Progress'>
+            <CircularProgress mode='indeterminate' />
           </div>
         </div>
       )
     }
     return (
-      <div className="Signup">
-        <Paper className="Signup-Panel">
-          <SignupForm onSignup={ handleSignup } />
+      <div className='Signup'>
+        <Paper className='Signup-Panel'>
+          <SignupForm onSignup={handleSignup} />
         </Paper>
-        <div className="Signup-Or">
+        <div className='Signup-Or'>
           or
         </div>
         <RaisedButton
-          label="Sign in with Google"
-          secondary={ true }
-          onTouchTap={ handleSignup.bind(this, { provider: 'google', type: 'popup' }) }
+          label='Sign in with Google'
+          secondary
+          onTouchTap={handleSignup({ provider: 'google', type: 'popup' })}
         />
-        <div className="Signup-Login">
-          <span className="Signup-Login-Label">
+        <div className='Signup-Login'>
+          <span className='Signup-Login-Label'>
             Already have an account?
           </span>
-          <Link className="Signup-Login-Link" to="/login">Login</Link>
+          <Link className='Signup-Login-Link' to='/login'>Login</Link>
         </div>
         <Snackbar
-          open={ this.state.snackCanOpen }
-          message={ this.state.errorMessage || 'Signup error'}
-          action="close"
-          autoHideDuration={ 3000 }
-          onRequestClose={ closeToast }
+          open={this.state.snackCanOpen}
+          message={this.state.errorMessage || 'Signup error'}
+          action='close'
+          autoHideDuration={3000}
+          onRequestClose={closeToast}
         />
       </div>
     )

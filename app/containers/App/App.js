@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react'
-
+import React, { Component } from 'react'
 
 // Components
 import Navbar from '../../components/Navbar/Navbar'
@@ -13,12 +12,13 @@ import './App.scss'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-
+type Props = {
+  account: Object,
+  children: Array,
+  logout: Function
+}
 export default class Main extends Component {
-  constructor (props) {
-    super(props)
-  }
-
+  props: Props
   static childContextTypes = {
     muiTheme: React.PropTypes.object
   }
@@ -39,20 +39,19 @@ export default class Main extends Component {
 
   handleLogout = () => {
     this.props.logout()
-    this.context.router.push(`/`)
+    this.context.router.push('/')
   }
 
   render () {
     return (
-      <div className="App">
+      <div className='App'>
         <Navbar
-          account={ this.props.account }
-          onMenuClick={ this.handleClick }
-          onLogoutClick={ this.handleLogout }
+          account={this.props.account}
+          onMenuClick={this.handleClick}
+          onLogoutClick={this.handleLogout}
         />
-        { this.props.children }
+        {this.props.children}
       </div>
     )
   }
 }
-

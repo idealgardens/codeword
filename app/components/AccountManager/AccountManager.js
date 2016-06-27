@@ -1,33 +1,31 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 import AccountDropdown from '../AccountDropdown/AccountDropdown'
 import './AccountManager.scss'
 
+type Props = {
+  account: Object,
+  onLogoutClick: Function
+}
 export default class AccountManager extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  static propTypes = {
-    account: PropTypes.object,
-    onLogoutClick: PropTypes.func
-  };
+  props: Props;
 
   render () {
-    if(this.props.account && this.props.account.username){
+    const { account, onLogoutClick } = this.props
+    if (account && account.username) {
       return (
         <AccountDropdown
-          account={ this.props.account }
-          onLogoutClick={ this.props.onLogoutClick }
+          account={account}
+          onLogoutClick={onLogoutClick}
         />
       )
     }
     return (
-      <div className="AccountManager-Buttons">
-        <Link className="AccountManager-Button" to="/login">
+      <div className='AccountManager-Buttons'>
+        <Link className='AccountManager-Button' to='/login'>
           Login
         </Link>
-        <Link className="AccountManager-Button" to="/signup">
+        <Link className='AccountManager-Button' to='/signup'>
           Signup
         </Link>
       </div>

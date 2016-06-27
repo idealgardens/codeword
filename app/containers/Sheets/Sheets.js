@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Paper from 'material-ui/lib/paper'
@@ -11,20 +11,19 @@ import TableBody from 'material-ui/lib/table/table-body'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import * as Actions from '../../actions/sheets'
 import './Sheets.scss'
-import { find, filter } from 'lodash'
-
+import { find } from 'lodash'
+type Props = {
+  users: Array,
+  sheets: Array,
+  getSheets: Function,
+  isLoading: Boolean
+}
 class Sheets extends Component {
-  constructor (props) {
-    super(props)
-  }
+  props: Props
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getSheets()
   }
-
-  static propTypes = {
-
-  };
 
   render () {
     const { sheets, isLoading } = this.props
@@ -33,10 +32,10 @@ class Sheets extends Component {
     const sheetsList = sheets ? sheets.map((sheet, i) => {
       const user = find(this.props.users, { id: sheet.user_id })
       return (
-        <TableRow key={ `Sheet-${i}` }>
-          <TableRowColumn>{ user.username }</TableRowColumn>
-          <TableRowColumn>{ user.first_name || 'John'} { user.last_name || 'Smith'}</TableRowColumn>
-          <TableRowColumn>{ sheet.location }</TableRowColumn>
+        <TableRow key={`Sheet-${i}`}>
+          <TableRowColumn>{user.username}</TableRowColumn>
+          <TableRowColumn>{user.first_name || 'John'} {user.last_name || 'Smith'}</TableRowColumn>
+          <TableRowColumn>{sheet.location}</TableRowColumn>
         </TableRow>
       )
     }) : null
@@ -48,21 +47,23 @@ class Sheets extends Component {
           {timeList}
 
           <Table>
-            <TableHeader adjustForCheckbox={ false } displaySelectAll={ false }>
+            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Username</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Location</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={ false }>
+            <TableBody displayRowCheckbox={false}>
                 {
-                  isLoading ?
-                  <TableRow>
-                    <TableRowColumn className='Sheets-Loading'>
-                      <CircularProgress size={1.5} />
-                    </TableRowColumn>
-                  </TableRow>
+                  isLoading
+                  ? (
+                    <TableRow>
+                      <TableRowColumn className='Sheets-Loading'>
+                        <CircularProgress size={1.5} />
+                      </TableRowColumn>
+                    </TableRow>
+                  )
                   : sheetsList
                 }
             </TableBody>
