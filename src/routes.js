@@ -10,8 +10,8 @@ import {
     NotFound,
     Location
   } from './containers'
-export default () => (
-  <Router history={browserHistory}>
+export default (store) => (
+  <Router history={browserHistory} store={store}>
     <Route path='/' component={App}>
       <IndexRoute component={Home} />
       <Route path='*' component={NotFound} />

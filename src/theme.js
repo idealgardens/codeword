@@ -1,4 +1,3 @@
-import Colors from 'material-ui/styles/colors'
 import {
   blueGrey100, blueGrey500, blueGrey700,
   pinkA200, tealA100, lightBlue500, grey900,

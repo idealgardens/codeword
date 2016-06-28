@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions/sheets'
+console.log('actions:', Actions)
 import { groupBy, map, reduce } from 'lodash'
 import LocationSummaryTile from '../../components/LocationSummaryTile/LocationSummaryTile'
 import LocationDetailTile from '../../components/LocationDetailTile/LocationDetailTile'

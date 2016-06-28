@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar'
 
 // Styling
 import Theme from '../../theme'
-import ThemeManager from 'material-ui/styles/themeManager'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import './App.scss'
 
 // Tap Plugin
@@ -29,7 +29,7 @@ export default class Main extends Component {
 
   getChildContext = () => {
     return {
-      muiTheme: ThemeManager.getMuiTheme(Theme)
+      muiTheme: getMuiTheme(Theme)
     }
   }
 

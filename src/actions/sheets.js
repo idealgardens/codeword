@@ -1,14 +1,16 @@
-export const ADD_SHEETS = 'ADD_SHEETS'
-export const GET_SHEETS_SUCCESS = 'GET_SHEETS_SUCCESS'
-export const GET_SHEETS_REQUEST = 'GET_SHEETS_REQUEST'
-export const GET_SHEETS_FAILURE = 'GET_SHEETS_FAILURE'
-export const REMOVE_SHEETS = 'REMOVE_SHEETS'
-export const UPDATE_SHEETS = 'UPDATE_SHEETS'
+import {
+  ADD_SHEETS,
+  GET_SHEETS_SUCCESS,
+  GET_SHEETS_REQUEST,
+  GET_SHEETS_FAILURE,
+  REMOVE_SHEETS,
+  UPDATE_SHEETS
+} from '../constants/ActionTypes'
 import { CALL_API } from 'redux-api-middleware'
 
 export function addSheets (sheets) {
   return {
-    type: 'ADD_SHEETS',
+    type: ADD_SHEETS,
     payload: sheets
   }
 }
@@ -25,13 +27,13 @@ export function getSheets () {
 
 export function removeSheets (sheets) {
   return {
-    type: 'REMOVE_SHEETS',
+    type: REMOVE_SHEETS,
     payload: sheets
   }
 }
 export function updateSheets (sheets) {
   return {
-    type: 'UPDATE_SHEETS',
+    type: UPDATE_SHEETS,
     payload: sheets
   }
 }
