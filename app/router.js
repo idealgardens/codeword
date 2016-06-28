@@ -8,7 +8,8 @@ import {
     Login,
     Signup,
     NotFound,
-    Sheets
+    Sheets,
+    LocationDetail
   } from './containers'
 export default (history) => (
   <Router history={ history }>
@@ -19,6 +20,7 @@ export default (history) => (
       <Route path='about' component={ About } />
       <Route path='account' component={ Account } />
       <Route path='sheets' component={ Sheets } />
+      <Route path='loc/:locationName' component={ LocationDetail } />
       <Route path='*' component={ NotFound } />
     </Route>
   </Router>
