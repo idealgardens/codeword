@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn, TableRow, TableRowColumn
-} from 'material-ui'
+import { Paper } from 'material-ui'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
 import styles from './LocationDetailTile.scss'
-// import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
+
 type Props = {
 
 };
@@ -15,11 +10,11 @@ export class LocationDetailTile extends Component {
   props: Props;
 
   render () {
-    console.log('props', this.props)
+    const { name } = this.props
     return (
-      <Paper className='LocationDetailTile' {...this.props}>
-        <div className='LocationDetailTile-Name'>
-          Clients
+      <Paper className={styles.container} {...this.props}>
+        <div className={styles.name}>
+          { name }
         </div>
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>

@@ -12,7 +12,7 @@ import OpenIcon from 'react-material-icons/icons/navigation/more-vert'
 import { reduce, camelCase } from 'lodash'
 import { Link } from 'react-router'
 
-import './LocationSummaryTile.scss'
+import styles from './LocationSummaryTile.scss'
 
 const tileStyle = {
   flexBasis: '28%',
@@ -32,29 +32,29 @@ export default class LocationSummaryTile extends Component {
     return (
       <Paper style={tileStyle}>
         <Toolbar style={{backgroundColor: 'white'}}>
-          <ToolbarTitle className='LocationSummaryTile-Title' text={name}/>
+          <ToolbarTitle className={styles.title} text={name}/>
           <ToolbarGroup float='right'>
             <FontIcon><Link to={`/${camelCase(name)}`}><ClosedIcon /></Link></FontIcon>
           </ToolbarGroup>
         </Toolbar>
-        <hr className='LocationSummaryTile-Underline' /><br/>
-        <div className='LocationSummaryTile-Diagram'>
-          <div className='LocationSummaryTile-Graph'>
-            <span style={{position: 'absolute', top: '2.8rem', left: '3.2rem'}}>{totalTime+8}%</span>
-            <span style={{position: 'absolute', top: '4.7rem', left: '2.6rem', fontSize: '.8rem'  }}>Complete</span>
+        <hr className={styles.underline} /><br/>
+        <div className={styles.diagram}>
+          <div className={styles.graph}>
+            <span className={styles.percentage}>{totalTime+8}%</span>
+            <span className={styles.complete}>Complete</span>
             <CircularProgress mode="determinate" value={100} color='rgba(254, 148, 58, .2)' style={{position: 'absolute'}} size={2}/>
             <CircularProgress mode="determinate" value={totalTime} color='rgba(255, 94, 58, 1)' style={{position: 'absolute'}} size={2}/>
           </div>
         </div>
-        <div className='LocationSummaryTile-Hours'>
-          <div className='LocationSummaryTile-Hour'>
-            <span className='LocationSummaryTile-Time positive-text'>{totalTime}</span>
+        <div className={styles.hours}>
+          <div className={styles.hour}>
+            <span className={`${styles.time} ${styles.positive}`}>{totalTime}</span>
             <span>Hours</span>
             <span>Completed</span>
           </div>
-          <hr className='LocationSummaryTile-Divider' /><br/>
-          <div className='LocationSummaryTile-Hour'>
-            <span className='LocationSummaryTile-Time negative-text'>{50 - totalTime}</span>
+          <hr className={styles.divider} /><br/>
+          <div className={styles.hour}>
+            <span className={`${styles.time} ${styles.negative}`}>{50 - totalTime}</span>
             <span>Hours</span>
             <span>Left</span>
           </div>

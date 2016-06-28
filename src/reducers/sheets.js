@@ -10,7 +10,6 @@ export default function sheets (state = {
   isFetching: false,
   items: []
 }, action) {
-  console.log('action:', action)
   switch (action.type) {
     case GET_SHEETS_REQUEST:
       return Object.assign({}, state, {

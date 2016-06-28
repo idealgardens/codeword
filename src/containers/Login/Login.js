@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
 // components
-import LoginForm from '../../components/LoginForm/LoginForm'
+import LoginForm from 'components/LoginForm/LoginForm'
 
 // material-ui components
 import Paper from 'material-ui/Paper'
@@ -12,10 +12,10 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FontIcon from 'material-ui/FontIcon'
 
 // styles
-import './Login.scss'
+import styles from './Login.scss'
 
 // firebase
-import firebase from '../../utils/firebase'
+import firebase from 'utils/firebase'
 
 
 export default class Login extends Component {
@@ -47,34 +47,33 @@ export default class Login extends Component {
         snackCanOpen: true,
         isLoading: true
       })
-  
-  const { email, password, provider } = loginData
-    let newState = {
-      isLoading: false,
-      errors: { username: null, email: null }
-    }
-    if (!provider && (!email || !password)) {
-      newState.errors.email = email ? 'Email is required' : null
-      newState.errors.password = password ? 'Password is required' : null
-      console.error('missing info', loginData, email, password)
-      return this.setState(newState)
-    }
-    if (email && password) {
-      firebase.auth()
-        .signInWithEmailAndPassword(email, password)
-        .catch((error) => {
-          if (error) {
-            console.error('Error logging in:', error)
-            newState.errorMessage = error.message || 'Error with login'
-          } else {
-            console.log('time to redirect or login?', error)
-          }
-          this.setState(newState)
-        })
-    }
+
+      const { email, password, provider } = loginData
+      let newState = {
+        isLoading: false,
+        errors: { username: null, email: null }
+      }
+      if (!provider && (!email || !password)) {
+        newState.errors.email = email ? 'Email is required' : null
+        newState.errors.password = password ? 'Password is required' : null
+        console.error('missing info', loginData, email, password)
+        return this.setState(newState)
+      }
+      if (email && password) {
+        firebase.auth()
+          .signInWithEmailAndPassword(email, password)
+          .catch((error) => {
+            if (error) {
+              console.error('Error logging in:', error)
+              newState.errorMessage = error.message || 'Error with login'
+            } else {
+              console.log('time to redirect or login?', error)
+            }
+            this.setState(newState)
+          })
+      }
     }
     const closeToast = () => this.setState({ snackCanOpen: false })
-
 
     if (isLoading) {
       return (
@@ -87,11 +86,11 @@ export default class Login extends Component {
     }
 
     return (
-      <div className="Login">
-        <Paper className="Login-Panel">
+      <div className={styles.container}>
+        <Paper className={styles.panel}>
           <LoginForm onLogin={ handleLogin } />
         </Paper>
-        <div className="Login-Or">
+        <div className={styles.or}>
           or
         </div>
         <RaisedButton
@@ -99,18 +98,17 @@ export default class Login extends Component {
           secondary={ true }
           onTouchTap={ handleLogin.bind(this, { provider: 'google', type: 'popup' }) }
         />
-        <div className="Login-Signup">
-          <span className="Login-Signup-Label">
+        <div className={styles.signup}>
+          <span className={styles.label}>
             Need an account?
           </span>
-          <Link className="Login-Signup-Link" to="/signup">
+          <Link className={styles.link} to='/signup'>
             Sign Up
           </Link>
         </div>
         <Snackbar
           open={ snackCanOpen && typeof errorMessage !== 'null' }
           message={ errorMessage }
-          
           action="close"
           autoHideDuration={ 3000 }
           onRequestClose={ this.handleRequestClose }

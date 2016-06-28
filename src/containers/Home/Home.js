@@ -1,25 +1,21 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as Actions from '../../actions/sheets'
-console.log('actions:', Actions)
+import * as Actions from 'actions/sheets'
 import { groupBy, map, reduce } from 'lodash'
-import LocationSummaryTile from '../../components/LocationSummaryTile/LocationSummaryTile'
-import LocationDetailTile from '../../components/LocationDetailTile/LocationDetailTile'
+import LocationSummaryTile from 'components/LocationSummaryTile/LocationSummaryTile'
+import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
+import CircularProgress from 'material-ui/CircularProgress'
 
 // import { Link } from 'react-router'
-import './Home.scss'
+import styles from './Home.scss'
 
 export default class Home extends Component {
   componentDidMount () {
     this.props.getSheets()
   }
   render () {
-    const { sheets, isLoading, users } = this.props
-    const tileStyle = {
-      flexBasis: '28%',
-      minWidth: '4rem'
-    }
+    const { sheets, isFetching, users } = this.props
     // console.log('sheets:', sheets)
     const locations = groupBy(sheets, 'location')
     const locationList = map(locations, (locationSheets, key) => {
@@ -30,12 +26,17 @@ export default class Home extends Component {
       )
     })
     return (
-      <div className='Home'>
-        <div className='Home-Row'>
-          {locationList}
-        </div>
-        <div className='Home-Row'>
-          <LocationDetailTile name='New York City' sheets={locations} />
+      <div className={styles.container}>
+        <div className={styles.row}>
+          {
+            isFetching
+            ? (
+              <div className={styles.progress}>
+                <CircularProgress mode='indeterminate' size={1.5} />
+              </div>
+            )
+            : locationList
+          }
         </div>
       </div>
     )
@@ -46,7 +47,7 @@ export default class Home extends Component {
 function mapStateToProps (state) {
   return {
     router: state.router,
-    isLoading: state.users.isFetching,
+    isFetching: state.sheets.isFetching,
     users: state.users.items,
     sheets: state.sheets.items
   }

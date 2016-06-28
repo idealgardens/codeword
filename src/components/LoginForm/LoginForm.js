@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Checkbox from 'material-ui/Checkbox'
-import './LoginForm.scss'
+import styles from './LoginForm.scss'
 
 const fieldStyle = { width: '80%' }
 const buttonStyle = { width: '100%' }
@@ -64,7 +64,7 @@ export default class LoginForm extends Component {
 
   render () {
     return (
-      <form className="LoginForm" onSubmit={ this.handleLogin }>
+      <form className={styles.form} onSubmit={ this.handleLogin }>
         <TextField
           hintText="some@email.com"
           floatingLabelText="Username/Email"
@@ -80,25 +80,25 @@ export default class LoginForm extends Component {
           errorText={ this.state.errors.password }
           style={ fieldStyle }
         />
-        <div className="LoginForm-Submit">
+        <div className={styles.submit}>
           <RaisedButton
-            label="Login"
+            label='Login'
             primary={ true }
-            type="submit"
+            type='submit'
             disabled={ this.props.account && this.props.account.isFetching}
             style={ buttonStyle }
           />
         </div>
-        <div className="LoginForm-Options">
-          <div className="LoginForm-Remember">
+        <div className={styles.options}>
+          <div className={styles.remember}>
             <Checkbox
-              name="remember"
-              value="remember"
-              label="Remember"
+              name='remember'
+              value='remember'
+              label='Remember'
               labelStyle={{ fontSize: '.8rem' }}
             />
           </div>
-          <Link className="LoginForm-Recover-Link" to="/recover">
+          <Link className={styles.recover} to='/recover'>
           Forgot Password?
           </Link>
         </div>

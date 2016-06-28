@@ -1,30 +1,31 @@
 import React, { Component } from 'react'
-import styles from './Location.scss'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as Actions from '../../actions/sheets'
-
-import LocationDetailTile from '../../components/LocationDetailTile/LocationDetailTile'
+import * as Actions from 'actions/sheets'
+import { startCase } from 'lodash'
+import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
+import styles from './Location.scss'
 
 export class Location extends Component {
 
   render () {
-    console.log('location render')
+    console.log('location render', this.props)
     return (
-      <div>
-        <LocationDetailTile />
+      <div className={styles.container}>
+        <LocationDetailTile name={this.props.name}/>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('state:', state)
-  return {}
+  const { pathname } = window.location
+  const name = startCase(pathname)
+  return {
+    name
+  }
 }
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(Actions, dispatch)
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators(Actions, dispatch)
 
 export default connect(
   mapStateToProps,

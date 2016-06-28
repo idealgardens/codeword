@@ -66,9 +66,9 @@ export class Navbar extends Component {
     ) : mainMenu
     return (
       <AppBar
-        title={<Link className="Navbar-Brand" to={ brandLinkLoc }>codeword</Link>}
+        title={<Link className={styles.brand} to={ brandLinkLoc }>codeword</Link>}
         titleStyle={{color: '#EB8C01'}}
-        className="Navbar"
+        className={styles.navbar}
         showMenuIconButton={ false }
         iconElementRight={ rightMenu }
       />

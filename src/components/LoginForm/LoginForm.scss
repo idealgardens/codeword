@@ -1,5 +1,5 @@
 @import '../../variables';
-.LoginForm {
+.form {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -11,65 +11,65 @@
   height: 100%;
   width: 100%;
   margin: .2rem;
-  &-Submit {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    width: 30%;
-    min-width: 192px;
-    margin-top: 1.5rem;
-    text-align: center;
-    color: $linkBlue;
-    align-items: center;
+}
+.submit {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  width: 30%;
+  min-width: 192px;
+  margin-top: 1.5rem;
+  text-align: center;
+  color: $linkBlue;
+  align-items: center;
+  flex-direction: column;
+}
+.options {
+  margin-top: 2rem;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.remember {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+}
+.recover-link {
+  display: inline;
+  font-size: .8rem;
+  color: $linkBlue;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.progress {
+  margin-top: 5rem;
+}
+@media screen and (max-width: 958px){
+  .recover {
+    font-size: 1rem;
+  }
+  .options {
     flex-direction: column;
   }
-  &-Options {
-    margin-top: 2rem;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
+  .remember {
+    display: none;
   }
-  &-Remember {
-    display: flex;
-    flex-direction: row;
-    flex-basis: 50%;
+}
+@media screen and (max-width: 1000px){
+  .options {
+    flex-direction: column;
   }
-  &-Recover-Link {
-    display: inline;
-    font-size: .8rem;
-    color: $linkBlue;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  &-Progress {
-    margin-top: 5rem;
-  }
-  @media screen and (max-width: 958px){
-    &-Recover-Link {
-      font-size: 1rem;
-    }
-    &-Options {
-      flex-direction: column;
-    }
-    &-Remember {
-      display: none;
-    }
-  }
-  @media screen and (max-width: 1000px){
-    &-Options {
-      flex-direction: column;
-    }
-    &-Remember {
-      display: none;
-    }
+  .remember {
+    display: none;
   }
 }

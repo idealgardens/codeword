@@ -1,13 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 
-
 // Components
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from 'components/Navbar/Navbar'
 
 // Styling
 import Theme from '../../theme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import './App.scss'
+import styles from './App.scss'
 
 // Tap Plugin
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -15,9 +14,6 @@ injectTapEventPlugin()
 
 
 export default class Main extends Component {
-  constructor (props) {
-    super(props)
-  }
 
   static childContextTypes = {
     muiTheme: React.PropTypes.object
@@ -44,7 +40,7 @@ export default class Main extends Component {
 
   render () {
     return (
-      <div className="App">
+      <div className={styles.container}>
         <Navbar
           account={ this.props.account }
           onMenuClick={ this.handleClick }

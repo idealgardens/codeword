@@ -15,7 +15,7 @@ import Snackbar from 'material-ui/Snackbar'
 import firebaseUtil from '../../utils/firebase'
 
 // styles
-import './Signup.scss'
+import styles from './Signup.scss'
 
 
 export default class Signup extends Component {
@@ -53,7 +53,7 @@ export default class Signup extends Component {
     const handleSignup = signupData => {
       const { username, email, provider, password } = signupData
       this.setState({ snackCanOpen: true, isLoading: true })
-      
+
       let newState = {
           isLoading: false,
           errors: { username: null, email: null }
@@ -84,16 +84,16 @@ export default class Signup extends Component {
 
     if (isLoading) {
       return (
-        <div className="Signup">
-          <div className="Signup-Progress">
+        <div className={styles.container}>
+          <div className={styles.progress}>
             <CircularProgress  mode="indeterminate" />
           </div>
         </div>
       )
     }
     return (
-      <div className="Signup">
-        <Paper className="Signup-Panel">
+      <div className={styles.container}>
+        <Paper className={styles.panel}>
           <SignupForm onSignup={ handleSignup } />
         </Paper>
         <div className="Signup-Or">

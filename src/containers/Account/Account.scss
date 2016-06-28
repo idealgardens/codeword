@@ -1,21 +1,36 @@
-.Account {
+@import '../../variables';
+
+.container {
   width: 100%;
   display: flex;
   flex-direction:column;
   align-items: center;
   justify-content: center;
-  &-Data {
-    display: flex;
-    flex-direction:column;
-  }
-  &-Datapoint {
-    margin-bottom: 1.2rem;
-  }
-  &-Username {
-    font-size: 2rem;
-  }
-  &-Email {
-    margin-bottom: 2.5rem;
-
+}
+.data {
+  display: flex;
+  flex-direction:column;
+}
+.datapoint {
+  margin-bottom: 1.2rem;
+}
+.username {
+  font-size: 2rem;
+}
+.email {
+  margin-bottom: 2.5rem;
+}
+.logout {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  border: 1px;
+  border-color: $primary;
+  cursor: pointer;
+  height: 2rem;
+  width: 100%;
+  &:hover {
+    background-color: $primary;
+    color: white;
   }
 }

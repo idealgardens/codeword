@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Paper from 'material-ui/Paper'
-import './SignupForm.scss'
+import styles from './SignupForm.scss'
 const fieldStyle = { width: '80%' }
 const buttonStyle = { width: '96%', marginBottom: '.5rem' }
 
@@ -89,7 +89,7 @@ export default class SignupForm extends Component {
 
   render () {
     return (
-      <form className="SignupForm" onSubmit={ this.handleSignup }>
+      <form className={styles.form} onSubmit={ this.handleSignup }>
         <TextField
           hintText="username"
           floatingLabelText="Username"
@@ -112,7 +112,7 @@ export default class SignupForm extends Component {
           style={ fieldStyle }
           type="password"
         />
-        <div className="SignupForm-Submit">
+        <div className={styles.submit}>
           <RaisedButton
             label="Sign Up"
             primary={true}
