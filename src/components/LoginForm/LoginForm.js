@@ -9,10 +9,11 @@ import styles from './LoginForm.scss'
 const fieldStyle = { width: '80%' }
 const buttonStyle = { width: '100%' }
 
+type Props = {
+  onLogin: Function
+}
 export default class LoginForm extends Component {
-  constructor (props) {
-    super(props)
-  }
+  props: Props
 
   state = { errors:{ username: null, password: null } }
 

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
   Paper,
   FontIcon,
@@ -8,7 +8,6 @@ import {
   ToolbarGroup
 } from 'material-ui'
 import ClosedIcon from 'react-material-icons/icons/navigation/more-horiz'
-import OpenIcon from 'react-material-icons/icons/navigation/more-vert'
 import { reduce, camelCase } from 'lodash'
 import { Link } from 'react-router'
 
@@ -18,12 +17,12 @@ const tileStyle = {
   flexBasis: '28%',
   minWidth: '4rem'
 }
-
+type Props = {
+  name: String,
+  sheets: Array
+};
 export default class LocationSummaryTile extends Component {
-  static propTypes = {
-    name: PropTypes.string,
-    sheets: PropTypes.array
-  }
+  props: Props
 
   render () {
     let { name, sheets } = this.props

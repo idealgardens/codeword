@@ -6,13 +6,16 @@ import { startCase } from 'lodash'
 import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
 import styles from './Location.scss'
 
+type Props = {
+  name: String,
+}
 export class Location extends Component {
-
+  props: Props
   render () {
-    console.log('location render', this.props)
+    // console.log('location render', this.props)
     return (
       <div className={styles.container}>
-        <LocationDetailTile name={this.props.name}/>
+        <LocationDetailTile name={this.props.name} />
       </div>
     )
   }

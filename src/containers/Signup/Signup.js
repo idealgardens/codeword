@@ -19,15 +19,12 @@ import styles from './Signup.scss'
 
 
 export default class Signup extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      errors: { username: null, password: null },
-      snackCanOpen: false,
-      errorMessage: null
-    }
-  }
 
+  state = {
+    errors: { username: null, password: null },
+    snackCanOpen: false,
+    errorMessage: null
+  }
   /**
    * @function reset
    * @description Reset whole state (inputs, errors, snackbar open/close)
@@ -96,7 +93,7 @@ export default class Signup extends Component {
         <Paper className={styles.panel}>
           <SignupForm onSignup={ handleSignup } />
         </Paper>
-        <div className="Signup-Or">
+        <div className={styles.or}>
           or
         </div>
         <RaisedButton
@@ -104,19 +101,27 @@ export default class Signup extends Component {
           secondary={ true }
           onTouchTap={ handleSignup.bind(this, { provider: 'google', type: 'popup' }) }
         />
-        <div className="Signup-Login">
+        <div className={styles.login}>
           <span className="Signup-Login-Label">
             Already have an account?
           </span>
-          <Link className="Signup-Login-Link" to="/login">Login</Link>
+          <Link className={styles.link} to="/login">Login</Link>
         </div>
-        <Snackbar
-          open={ this.state.snackCanOpen }
-          message={ this.state.errorMessage || 'Signup error'}
-          action="close"
-          autoHideDuration={ 3000 }
-          onRequestClose={ closeToast }
-        />
+        {
+          this.state.errorMessage
+          ?
+          (
+            <Snackbar
+              open={ this.state.snackCanOpen }
+              message={ this.state.errorMessage || 'Signup error'}
+              action="close"
+              autoHideDuration={ 3000 }
+              onRequestClose={ closeToast }
+            />
+          )
+          : null
+        }
+
       </div>
     )
   }

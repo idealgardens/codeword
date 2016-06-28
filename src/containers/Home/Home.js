@@ -10,7 +10,14 @@ import CircularProgress from 'material-ui/CircularProgress'
 // import { Link } from 'react-router'
 import styles from './Home.scss'
 
+type Props = {
+  sheets: Array,
+  users: Array,
+  isFetching: Boolean
+}
 export default class Home extends Component {
+  props: Props
+
   componentDidMount () {
     this.props.getSheets()
   }
@@ -32,7 +39,7 @@ export default class Home extends Component {
             isFetching
             ? (
               <div className={styles.progress}>
-                <CircularProgress mode='indeterminate' size={1.5} />
+                <CircularProgress color='#EB8C01' mode='indeterminate' size={2} />
               </div>
             )
             : locationList

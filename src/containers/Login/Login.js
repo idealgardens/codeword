@@ -77,9 +77,9 @@ export default class Login extends Component {
 
     if (isLoading) {
       return (
-        <div className="Login">
-          <div className="Login-Progress">
-            <CircularProgress  mode="indeterminate" />
+        <div className={styles.container}>
+          <div className={styles.progress}>
+            <CircularProgress color='#EB8C01' mode="indeterminate" />
           </div>
         </div>
       )
@@ -106,13 +106,20 @@ export default class Login extends Component {
             Sign Up
           </Link>
         </div>
-        <Snackbar
-          open={ snackCanOpen && typeof errorMessage !== 'null' }
-          message={ errorMessage }
-          action="close"
-          autoHideDuration={ 3000 }
-          onRequestClose={ this.handleRequestClose }
-        />
+        {
+          errorMessage
+          ? (
+              <Snackbar
+                open={ snackCanOpen && !!errorMessage }
+                message={ errorMessage }
+                action="close"
+                autoHideDuration={ 3000 }
+                onRequestClose={ this.handleRequestClose }
+              />
+            )
+          : null
+        }
+
       </div>
     )
 
