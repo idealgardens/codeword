@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar'
 
 // Styling
 import Theme from '../../theme'
-import ThemeManager from 'material-ui/lib/styles/theme-manager'
+import ThemeManager from 'material-ui/styles/themeManager'
 import './App.scss'
 
 // Tap Plugin
@@ -55,4 +55,3 @@ export default class Main extends Component {
     )
   }
 }
-
