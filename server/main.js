@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import convert from 'koa-convert'
+import route from 'koa-route'
 import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
 import historyApiFallback from 'koa-connect-history-api-fallback'
@@ -9,11 +10,24 @@ import _debug from 'debug'
 import config from '../config'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
+import { timesheets } from 'tsheets-sdk'
+import json from 'koa-json'
 
 const debug = _debug('app:server')
 const paths = config.utils_paths
 const app = new Koa()
+app.use(json())
 
+app.use(route.get('/api/sheets', getSheets))
+
+function *getSheets() {
+  yield timesheets.get()
+    .then((apiRes) => this.body = apiRes)
+    .catch((error) => {
+      console.log('error:', error)
+      res.status(500).json(error || { message: 'error getting sheets'})
+    })
+}
 // Enable koa-proxy if it has been enabled in the config.
 if (config.proxy && config.proxy.enabled) {
   app.use(convert(proxy(config.proxy.options)))
@@ -56,6 +70,7 @@ if (config.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
   app.use(serve(paths.dist()))
+
 }
 
 export default app

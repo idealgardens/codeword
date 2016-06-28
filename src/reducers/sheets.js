@@ -2,11 +2,15 @@ import {
   GET_SHEETS_REQUEST,
   GET_SHEETS_SUCCESS,
   GET_SHEETS_FAILURE
-} from '../actions/sheets'
+} from '../constants/ActionTypes'
 
 import { toArray } from 'lodash'
 
-export default function sheets (state = {}, action) {
+export default function sheets (state = {
+  isFetching: false,
+  items: []
+}, action) {
+  console.log('action:', action)
   switch (action.type) {
     case GET_SHEETS_REQUEST:
       return Object.assign({}, state, {
@@ -24,6 +28,7 @@ export default function sheets (state = {}, action) {
         console.error('No timesheets found')
         return state
       }
+      console.log('get sheets success:', action.payload.results)
       return Object.assign({}, state, {
         isFetching: false,
         items: toArray(action.payload.results.timesheets)
