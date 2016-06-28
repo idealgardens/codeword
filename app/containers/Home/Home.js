@@ -1,24 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  Paper,
-  Table,
-  TableHeaderColumn,
-  TableRow,
-  TableHeader,
-  TableRowColumn,
-  TableBody,
-  FontIcon,
-  CircularProgress,
-  Toolbar,
-  ToolbarTitle,
-  ToolbarGroup
-} from 'material-ui'
 import * as Actions from '../../actions/sheets'
-import MoreIcon from 'react-material-icons/icons/navigation/more-vert'
 import { groupBy, map, reduce } from 'lodash'
-import LocationTile from '../../components/LocationTile/LocationTile'
+import LocationSummaryTile from '../../components/LocationSummaryTile/LocationSummaryTile'
+import LocationDetailTile from '../../components/LocationDetailTile/LocationDetailTile'
 
 // import { Link } from 'react-router'
 import './Home.scss'
@@ -39,13 +25,16 @@ export default class Home extends Component {
       const totalTime = Math.ceil(reduce(locationSheets.map(sheet => sheet.duration), (sum, n) => sum + n) / 3600)
       const name = key.replace('(', '').replace('?)', '')
       return (
-        <LocationTile key={key} name={name} sheets={locationSheets} />
+        <LocationSummaryTile key={key} name={name} sheets={locationSheets} />
       )
     })
     return (
       <div className='Home'>
         <div className='Home-Row'>
           {locationList}
+        </div>
+        <div className='Home-Row'>
+          <LocationDetailTile name='New York City' sheets={locations} />
         </div>
       </div>
     )

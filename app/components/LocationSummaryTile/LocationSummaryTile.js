@@ -7,19 +7,22 @@ import {
   ToolbarTitle,
   ToolbarGroup
 } from 'material-ui'
-import MoreIcon from 'react-material-icons/icons/navigation/more-vert'
-import { reduce } from 'lodash'
+import ClosedIcon from 'react-material-icons/icons/navigation/more-horiz'
+import OpenIcon from 'react-material-icons/icons/navigation/more-vert'
+import { reduce, camelCase } from 'lodash'
+import { Link } from 'react-router'
 
-import './LocationTile.scss'
+import './LocationSummaryTile.scss'
 
 const tileStyle = {
   flexBasis: '28%',
   minWidth: '4rem'
 }
 
-export default class LocationTile extends Component {
+export default class LocationSummaryTile extends Component {
   static propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string,
+    sheets: PropTypes.array
   }
 
   render () {
@@ -29,31 +32,29 @@ export default class LocationTile extends Component {
     return (
       <Paper style={tileStyle}>
         <Toolbar style={{backgroundColor: 'white'}}>
-          <ToolbarTitle className='LocationTile-Title' text={name}/>
+          <ToolbarTitle className='LocationSummaryTile-Title' text={name}/>
           <ToolbarGroup float='right'>
-            <FontIcon>
-              <MoreIcon />
-            </FontIcon>
+            <FontIcon><Link to={`/${camelCase(name)}`}><ClosedIcon /></Link></FontIcon>
           </ToolbarGroup>
         </Toolbar>
-        <hr className='LocationTile-Underline' /><br/>
-        <div className='LocationTile-Diagram'>
-          <div className='LocationTile-Graph'>
+        <hr className='LocationSummaryTile-Underline' /><br/>
+        <div className='LocationSummaryTile-Diagram'>
+          <div className='LocationSummaryTile-Graph'>
             <span style={{position: 'absolute', top: '2.8rem', left: '3.2rem'}}>{totalTime+8}%</span>
             <span style={{position: 'absolute', top: '4.7rem', left: '2.6rem', fontSize: '.8rem'  }}>Complete</span>
             <CircularProgress mode="determinate" value={100} color='rgba(254, 148, 58, .2)' style={{position: 'absolute'}} size={2}/>
             <CircularProgress mode="determinate" value={totalTime} color='rgba(255, 94, 58, 1)' style={{position: 'absolute'}} size={2}/>
           </div>
         </div>
-        <div className='LocationTile-Hours'>
-          <div className='LocationTile-Hour'>
-            <span className='LocationTile-Time positive-text'>{totalTime}</span>
+        <div className='LocationSummaryTile-Hours'>
+          <div className='LocationSummaryTile-Hour'>
+            <span className='LocationSummaryTile-Time positive-text'>{totalTime}</span>
             <span>Hours</span>
             <span>Completed</span>
           </div>
-          <hr className='LocationTile-Divider' /><br/>
-          <div className='LocationTile-Hour'>
-            <span className='LocationTile-Time negative-text'>{50 - totalTime}</span>
+          <hr className='LocationSummaryTile-Divider' /><br/>
+          <div className='LocationSummaryTile-Hour'>
+            <span className='LocationSummaryTile-Time negative-text'>{50 - totalTime}</span>
             <span>Hours</span>
             <span>Left</span>
           </div>

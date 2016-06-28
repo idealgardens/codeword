@@ -22,10 +22,10 @@ export const today = () => {
  * @return {Promise}
  */
 export const makeRequest = (params) => {
-  const { endpoint, method, body, qs } = params
-
+  const { url, method, body, qs } = params
+  console.log({ url, method, body, qs })
   let opts = {
-    url: apiBaseUri + endpoint,
+    url: apiBaseUri + url,
     qs: qs || {},
     method: method || 'get',
     json: true,
@@ -34,9 +34,14 @@ export const makeRequest = (params) => {
     }
   }
   if (body && Object.keys(body).length) opts.json = { data: body }
-
-  if (!opts.qs.start_date) opts.qs.start_date = defaultStartDate
-  if (!opts.qs.end_date) opts.qs.end_date = today()
+  // TODO: See if this always works
+  if (method === 'POST' && !body) {
+    opts.json = { data: { 'on_the_clock': 'both' } }
+  }
+  if (url === 'sheets') {
+    if (!opts.qs.start_date) opts.qs.start_date = defaultStartDate
+    if (!opts.qs.end_date) opts.qs.end_date = today()
+  }
 
   return new Promise((resolve, reject) => {
     request(opts, (err, res, json) => {
