@@ -41,7 +41,7 @@ if (__DEBUG__) {
 const MOUNT_NODE = document.getElementById('root')
 
 let render = (routerKey = null) => {
-  const routes = require('./routes/index').default(store)
+  const routes = require('./routes').default(store)
 
   ReactDOM.render(
     <AppContainer
