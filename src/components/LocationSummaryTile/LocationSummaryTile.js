@@ -20,7 +20,7 @@ const tileStyle = {
 type Props = {
   name: String,
   sheets: Array
-};
+}
 export default class LocationSummaryTile extends Component {
   props: Props
 
@@ -31,18 +31,30 @@ export default class LocationSummaryTile extends Component {
     return (
       <Paper style={tileStyle}>
         <Toolbar style={{backgroundColor: 'white'}}>
-          <ToolbarTitle className={styles.title} text={name}/>
+          <ToolbarTitle className={styles.title} text={name} />
           <ToolbarGroup float='right'>
             <FontIcon><Link to={`/${camelCase(name)}`}><ClosedIcon /></Link></FontIcon>
           </ToolbarGroup>
         </Toolbar>
-        <hr className={styles.underline} /><br/>
+        <hr className={styles.underline} /><br />
         <div className={styles.diagram}>
           <div className={styles.graph}>
-            <span className={styles.percentage}>{totalTime+8}%</span>
+            <span className={styles.percentage}>{totalTime + 8}%</span>
             <span className={styles.complete}>Complete</span>
-            <CircularProgress mode="determinate" value={100} color='rgba(254, 148, 58, .2)' style={{position: 'absolute'}} size={2}/>
-            <CircularProgress mode="determinate" value={totalTime} color='rgba(255, 94, 58, 1)' style={{position: 'absolute'}} size={2}/>
+            <CircularProgress
+              mode='determinate'
+              value={100}
+              size={2}
+              color='rgba(254, 148, 58, .2)'
+              style={{position: 'absolute'}}
+            />
+            <CircularProgress
+              mode='determinate'
+              value={totalTime}
+              color='rgba(255, 94, 58, 1)'
+              style={{position: 'absolute'}}
+              size={2}
+            />
           </div>
         </div>
         <div className={styles.hours}>
@@ -51,7 +63,7 @@ export default class LocationSummaryTile extends Component {
             <span>Hours</span>
             <span>Completed</span>
           </div>
-          <hr className={styles.divider} /><br/>
+          <hr className={styles.divider} /><br />
           <div className={styles.hour}>
             <span className={`${styles.time} ${styles.negative}`}>{50 - totalTime}</span>
             <span>Hours</span>

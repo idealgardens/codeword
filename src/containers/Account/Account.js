@@ -1,18 +1,17 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, { Component } from 'react'
 
 // styles
 import styles from './Account.scss'
 
 // firebase
-import firebaseUtil from '../../utils/firebase'
+// import firebaseUtil from 'utils/firebase'
 
-
+type Props = {
+  account: Object,
+  logout: Function
+}
 export default class Acccount extends Component {
-
-  static propTypes = {
-    account: PropTypes.object,
-  };
+  props: Props
 
   render () {
     const { account, logout } = this.props
@@ -21,18 +20,18 @@ export default class Acccount extends Component {
       <div className={styles.container}>
         <div className={styles.data}>
           <span className={`${styles.datapoint} ${styles.username}`}>
-            { account.username }
+            {account.username}
           </span>
           <span className={`${styles.datapoint} ${styles.name}`}>
-            { account.name || 'No Name' }
+            {account.name || 'No Name'}
           </span>
           <span className={`${styles.datapoint} ${styles.role}`}>
-            { account.role }
+            {account.role}
           </span>
-          <a className={`${styles.datapoint} ${styles.email}`} href={ emailTo }>
-            { account.email }
+          <a className={`${styles.datapoint} ${styles.email}`} href={emailTo}>
+            {account.email}
           </a>
-          <button className={styles.logout} onClick={ logout }>
+          <button className={styles.logout} onClick={logout}>
             Logout
           </button>
         </div>
