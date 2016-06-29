@@ -1,0 +1,21 @@
+{
+  "name": "codeword",
+  "description": "",
+  "scripts": {},
+  "env": {
+    "TSHEETS_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

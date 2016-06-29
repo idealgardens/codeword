@@ -23,8 +23,8 @@ export default function sheets (state = {
         error: action.payload
       })
     case GET_SHEETS_SUCCESS:
-      if (!action || !action.payload) {
-        console.error('No timesheets found')
+      if (!action || !action.payload || !action.payload.results) {
+        console.error('No timesheets found', action)
         return state
       }
       console.log('get sheets success:', action.payload.results)

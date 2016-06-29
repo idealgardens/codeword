@@ -1,28 +1,26 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import CircularProgress from 'material-ui/CircularProgress'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
-import * as Actions from '../../actions/sheets'
+import * as Actions from 'actions/sheets'
 import './Sheets.scss'
-import { find, filter } from 'lodash'
-
+import { find } from 'lodash'
+type Props = {
+  sheets: Array,
+  users: Array,
+  isFetching: Boolean
+}
 class Sheets extends Component {
-  constructor (props) {
-    super(props)
-  }
+  props: Props
 
   componentDidMount() {
     this.props.getSheets()
   }
 
-  static propTypes = {
-
-  };
-
   render () {
     const { sheets, isLoading } = this.props
-    console.log('sheets:', sheets)
-
+    // console.log('sheets:', sheets)
     const sheetsList = sheets ? sheets.map((sheet, i) => {
       const user = find(this.props.users, { id: sheet.user_id })
       return (
