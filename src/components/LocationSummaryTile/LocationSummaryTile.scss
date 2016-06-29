@@ -1,0 +1,84 @@
+@import '../../variables';
+
+.title {
+  color: $mediumGray;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.location {
+  display: flex;
+  flex-direction: column;
+}
+.name {
+  font-size: 2rem;
+}
+.diagram {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 12rem;
+  font-size: 1.5rem;
+}
+.graph {
+  position: relative;
+  width: 100%;
+  padding-bottom: 9rem;
+}
+.underline {
+  float: left;
+  background-color: $background2;
+  border-color: transparent;
+  border-radius: 2px;
+  width: 3rem;
+  height: 1px;
+  margin-left: 1rem;
+}
+.divider {
+  background-color: $mediumGray;
+  width: 1px;
+  border-radius: 3px;
+  height: 4rem;
+}
+.hours {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.hour {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: $mediumGray;
+  width: 50%;
+  font-weight: 100;
+}
+.time {
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.percentage {
+  position: absolute;
+  top: 2.8rem;
+  left: 3.2rem;
+}
+.complete {
+  position: absolute;
+  top: 4.7rem;
+  left: 2.6rem;
+  font-size: .8rem;
+}
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}
