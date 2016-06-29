@@ -10,7 +10,7 @@ branches:
     - master
 
 script:
-  # - npm run lint
+  - npm run lint
   - npm run test
   - NODE_ENV=production npm run deploy
 
@@ -25,4 +25,5 @@ install:
   - npm install
 
 after_success:
-  - npm run codecov
+  - bash <(curl -s https://codecov.io/bash)
+  # - npm run codecov

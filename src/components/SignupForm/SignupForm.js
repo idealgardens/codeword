@@ -1,22 +1,23 @@
-import React, {Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import CircularProgress from 'material-ui/CircularProgress'
-import Paper from 'material-ui/Paper'
 import styles from './SignupForm.scss'
+import { capitalize } from 'lodash'
+
 const fieldStyle = { width: '80%' }
 const buttonStyle = { width: '96%', marginBottom: '.5rem' }
 
+type Props = {
+  account: Object,
+  onSignup: Function
+}
 export default class SignupForm extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  state = { errors:{} }
+  props: Props
+  state = { errors: {} }
 
   reset = () =>
     this.setState({
-      errors:{},
+      errors: {},
       username: null,
       email: null,
       name: null
@@ -29,7 +30,7 @@ export default class SignupForm extends Component {
   handleSignup = e => {
     e.preventDefault()
     let newAccountData = this.state
-    if(this.requireInputs()){
+    if (this.requireInputs()) {
       newAccountData.password = this.password
       newAccountData.confirm = this.confirm
       this.props.onSignup(newAccountData)
@@ -46,10 +47,10 @@ export default class SignupForm extends Component {
       {name: 'email', val: this.state.email},
       {name: 'name', val: this.state.name},
       {name: 'password', val: this.password},
-      {name: 'confirm', val: this.confirm},
+      {name: 'confirm', val: this.confirm}
     ]
     const firstError = find(requiredInputs, (input) => {
-      if(!input.val || input.val == ''){
+      if (!input.val || input.val === '') {
         return true
       }
     })
@@ -84,41 +85,42 @@ export default class SignupForm extends Component {
   }
 
   googleSignup = () => {
-    this.props.signup('google')
+    this.props.onSignup('google')
   }
 
   render () {
+    const { account } = this.props
     return (
-      <form className={styles.form} onSubmit={ this.handleSignup }>
+      <form className={styles.form} onSubmit={this.handleSignup}>
         <TextField
-          hintText="username"
-          floatingLabelText="Username"
+          hintText='username'
+          floatingLabelText='Username'
           onChange={this.handleInputChange.bind(this, 'username')}
-          errorText={ this.state.errors.username }
-          style={ fieldStyle }
+          errorText={this.state.errors.username}
+          style={fieldStyle}
         />
         <TextField
-          hintText="email"
-          floatingLabelText="Email"
+          hintText='email'
+          floatingLabelText='Email'
           onChange={this.handleInputChange.bind(this, 'email')}
-          errorText={ this.state.errors.email }
-          style={ fieldStyle }
+          errorText={this.state.errors.email}
+          style={fieldStyle}
         />
         <TextField
-          hintText="password"
-          floatingLabelText="Password"
-          onChange={ this.handlePrivateChange.bind(this, 'password') }
-          errorText={ this.state.errors.password }
-          style={ fieldStyle }
-          type="password"
+          hintText='password'
+          floatingLabelText='Password'
+          onChange={this.handlePrivateChange.bind(this, 'password')}
+          errorText={this.state.errors.password}
+          style={fieldStyle}
+          type='password'
         />
         <div className={styles.submit}>
           <RaisedButton
-            label="Sign Up"
-            primary={true}
-            type="submit"
-            disabled={ this.props.account && this.props.account.isFetching}
-            style={ buttonStyle }
+            label='Sign Up'
+            primary
+            type='submit'
+            disabled={account && account.isFetching}
+            style={buttonStyle}
           />
         </div>
       </form>

@@ -20,7 +20,7 @@
     "deploy": "better-npm-run deploy",
     "deploy:dev": "better-npm-run deploy:dev",
     "deploy:prod": "better-npm-run deploy:prod",
-    "codecov": "cat coverage/*/lcov.info | codecov"
+    "codecov": "cat coverage/*/lcov.info | codecov -t da2c08f6-61d7-4c4b-871a-acbc9f6ae124"
   },
   "betterScripts": {
     "compile": {

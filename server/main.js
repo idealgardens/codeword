@@ -20,12 +20,12 @@ app.use(json())
 
 app.use(route.get('/api/sheets', getSheets))
 
-function *getSheets() {
+function *getSheets () {
   yield timesheets.get()
     .then((apiRes) => this.body = apiRes)
     .catch((error) => {
       console.log('error:', error)
-      res.status(500).json(error || { message: 'error getting sheets'})
+      throw new Error(error || { message: 'error getting sheets' })
     })
 }
 // Enable koa-proxy if it has been enabled in the config.
@@ -70,7 +70,6 @@ if (config.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
   app.use(serve(paths.dist()))
-
 }
 
 export default app

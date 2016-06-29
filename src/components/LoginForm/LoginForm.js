@@ -1,8 +1,7 @@
-import React, {Component, PropTypes} from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import CircularProgress from 'material-ui/CircularProgress'
 import Checkbox from 'material-ui/Checkbox'
 import styles from './LoginForm.scss'
 
@@ -10,28 +9,25 @@ const fieldStyle = { width: '80%' }
 const buttonStyle = { width: '100%' }
 
 type Props = {
+  account: Object,
   onLogin: Function
 }
 export default class LoginForm extends Component {
   props: Props
 
-  state = { errors:{ username: null, password: null } }
-
-  static propTypes = {
-    onLogin: PropTypes.func
-  }
+  state = { errors: { username: null, password: null } }
 
   /**
    * @function handleInputChange
    * @description Update the state with the values from the form inputs.
    * @fires context#setState
    */
-   handleInputChange = (name, e) => {
-     e.preventDefault();
-     this.setState({
-       [name]: e.target.value
-     })
-   }
+  handleInputChange = (name, e) => {
+    e.preventDefault()
+    this.setState({
+      [name]: e.target.value
+    })
+  }
 
   /**
   * @function handlePrivateChange
@@ -45,19 +41,19 @@ export default class LoginForm extends Component {
   handleLogin = e => {
     if (e && typeof e.preventDefault === 'function') e.preventDefault()
     const { username } = this.state
-    if (!username || username == '') {
+    if (!username || username === '') {
       return this.setState({
         errors: { username: 'Username required' }
       })
     }
-    if (!this.password || this.password == '') {
+    if (!this.password || this.password === '') {
       return this.setState({
         errors: { password: 'Password required' }
       })
     }
     const loginData = { username, password: this.password }
     if (this.props.onLogin) this.props.onLogin(loginData)
- }
+  }
 
   googleLogin = () => {
     this.props.onLogin('google')
@@ -65,29 +61,29 @@ export default class LoginForm extends Component {
 
   render () {
     return (
-      <form className={styles.form} onSubmit={ this.handleLogin }>
+      <form className={styles.form} onSubmit={this.handleLogin}>
         <TextField
-          hintText="some@email.com"
-          floatingLabelText="Username/Email"
-          onChange={ this.handleInputChange.bind(this, 'username') }
-          errorText={ this.state.errors.username }
-          style={ fieldStyle }
+          hintText='some@email.com'
+          floatingLabelText='Username/Email'
+          onChange={this.handleInputChange.bind(this, 'username')}
+          errorText={this.state.errors.username}
+          style={fieldStyle}
         />
         <TextField
-          hintText="password"
-          floatingLabelText="Password"
-          type="password"
-          onChange={ this.handlePrivateChange.bind(this, 'password') }
-          errorText={ this.state.errors.password }
-          style={ fieldStyle }
+          hintText='password'
+          floatingLabelText='Password'
+          type='password'
+          onChange={this.handlePrivateChange.bind(this, 'password')}
+          errorText={this.state.errors.password}
+          style={fieldStyle}
         />
         <div className={styles.submit}>
           <RaisedButton
             label='Login'
-            primary={ true }
+            primary
             type='submit'
-            disabled={ this.props.account && this.props.account.isFetching}
-            style={ buttonStyle }
+            disabled={this.props.account && this.props.account.isFetching}
+            style={buttonStyle}
           />
         </div>
         <div className={styles.options}>
@@ -100,7 +96,7 @@ export default class LoginForm extends Component {
             />
           </div>
           <Link className={styles.recover} to='/recover'>
-          Forgot Password?
+            Forgot Password?
           </Link>
         </div>
       </form>

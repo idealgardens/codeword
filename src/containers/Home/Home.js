@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from 'actions/sheets'
-import { groupBy, map, reduce } from 'lodash'
+import { groupBy, map } from 'lodash'
 import LocationSummaryTile from 'components/LocationSummaryTile/LocationSummaryTile'
-import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
 import CircularProgress from 'material-ui/CircularProgress'
 
 // import { Link } from 'react-router'
@@ -13,20 +12,23 @@ import styles from './Home.scss'
 type Props = {
   sheets: Array,
   users: Array,
-  isFetching: Boolean
+  isFetching: Boolean,
+  getSheets: Function
 }
 export default class Home extends Component {
   props: Props
 
   componentDidMount () {
-    this.props.getSheets()
+    if (!this.props.sheets.length) {
+      this.props.getSheets()
+    }
   }
   render () {
-    const { sheets, isFetching, users } = this.props
+    const { sheets, isFetching } = this.props
     // console.log('sheets:', sheets)
     const locations = groupBy(sheets, 'location')
     const locationList = map(locations, (locationSheets, key) => {
-      const totalTime = Math.ceil(reduce(locationSheets.map(sheet => sheet.duration), (sum, n) => sum + n) / 3600)
+      // const totalTime = Math.ceil(reduce(locationSheets.map(sheet => sheet.duration), (sum, n) => sum + n) / 3600)
       const name = key.replace('(', '').replace('?)', '')
       return (
         <LocationSummaryTile key={key} name={name} sheets={locationSheets} />

@@ -8,24 +8,25 @@ import styles from './Location.scss'
 
 type Props = {
   name: String,
+  sheets: Array
 }
 export class Location extends Component {
   props: Props
   render () {
-    // console.log('location render', this.props)
+    const { name, sheets } = this.props
     return (
       <div className={styles.container}>
-        <LocationDetailTile name={this.props.name} />
+        <LocationDetailTile name={name} sheets={sheets} />
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { pathname } = window.location
-  const name = startCase(pathname)
+  const name = startCase(window.location.pathname)
   return {
-    name
+    name,
+    sheets: state.sheets.items
   }
 }
 const mapDispatchToProps = (dispatch) => bindActionCreators(Actions, dispatch)
