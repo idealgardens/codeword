@@ -5,54 +5,39 @@ import {
   Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn
   } from 'material-ui/Table'
-import styles from './LocationDetailTile.scss'
+import styles from './ClientsTile.scss'
 import { find } from 'lodash'
 
 type Props = {
   name: String,
-  sheets: Array,
-  users: Array,
+  clients: Array,
   isLoading: Boolean
 }
-export class LocationDetailTile extends Component {
+export class ClientsTile extends Component {
   props: Props
 
   render () {
-    const { sheets, users, isLoading, name } = this.props
-    console.log('sheets:', {sheets, users})
-    const sheetsList = sheets ? sheets.map((sheet, i) => {
-      const user = find(users, { id: sheet.user_id })
-      if (!user) {
-        return (
-          <TableRow key={`Sheet-${i}`}>
-            <TableRowColumn>{sheet.user_id}</TableRowColumn>
-            <TableRowColumn>{sheet.jobcode_id || 'John'}</TableRowColumn>
-            <TableRowColumn>{sheet.location}</TableRowColumn>
-          </TableRow>
-        )
-      }
+    const { clients, isLoading, name } = this.props
+    console.log('clients:', {clients})
+    const clientsList = clients ? clients.map((client, i) => {
       return (
         <TableRow key={`Sheet-${i}`}>
-          <TableRowColumn>{user.username}</TableRowColumn>
-          <TableRowColumn>{user.first_name || 'John'} {user.last_name || 'Smith'}</TableRowColumn>
-          <TableRowColumn>{sheet.location}</TableRowColumn>
+          <TableRowColumn>{client.name}</TableRowColumn>
+          <TableRowColumn>{client.scopedHours}</TableRowColumn>
         </TableRow>
       )
     }) : null
-    const timeList = find(sheets, { user_id: 41352 })
-    console.log('timelist', timeList)
     return (
       <div className={styles.container}>
         <Paper className={styles.pane} zDepth={1}>
           <div className={styles.name}>
-            {name}
+            Clients
           </div>
           <Table>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
-                <TableHeaderColumn>Username</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Location</TableHeaderColumn>
+                <TableHeaderColumn>Scoped Hours</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
@@ -65,7 +50,7 @@ export class LocationDetailTile extends Component {
                       </TableRowColumn>
                     </TableRow>
                   )
-                  : sheetsList
+                  : clientsList
                 }
             </TableBody>
           </Table>
@@ -75,4 +60,4 @@ export class LocationDetailTile extends Component {
   }
 }
 
-export default LocationDetailTile
+export default ClientsTile

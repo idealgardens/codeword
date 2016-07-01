@@ -20,9 +20,14 @@ app.use(json())
 
 app.use(route.get('/api/sheets', getSheets))
 
-function *getSheets () {
+function *getSheets (req) {
+  console.log('request:', req)
+  console.log('request.body:', req.body)
   yield timesheets.get()
-    .then((apiRes) => this.body = apiRes)
+    .then((apiRes) => {
+      console.log('api response:', apiRes)
+      return this.body = apiRes
+    })
     .catch((error) => {
       console.log('error:', error)
       throw new Error(error || { message: 'error getting sheets' })

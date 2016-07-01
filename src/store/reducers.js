@@ -3,12 +3,14 @@ import { routerReducer as router } from 'react-router-redux'
 import account from '../reducers/account'
 import sheets from '../reducers/sheets'
 import users from '../reducers/users'
+import clients from '../reducers/clients'
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // Add sync reducers here
     account,
     sheets,
     users,
+    clients,
     router,
     ...asyncReducers
   })
