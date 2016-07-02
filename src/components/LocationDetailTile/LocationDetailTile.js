@@ -20,8 +20,10 @@ export class LocationDetailTile extends Component {
   render () {
     const { sheets, users, isLoading, name } = this.props
     console.log('sheets:', {sheets, users})
-    const sheetsList = sheets ? sheets.map((sheet, i) => {
+    let idsList = []
+    const sheetsList = users ? users.map((sheet, i) => {
       const user = find(users, { id: sheet.user_id })
+      idsList.push(sheet.user_id)
       if (!user) {
         return (
           <TableRow key={`Sheet-${i}`}>
@@ -39,6 +41,7 @@ export class LocationDetailTile extends Component {
         </TableRow>
       )
     }) : null
+    console.log('idsList', idsList)
     const timeList = find(sheets, { user_id: 41352 })
     console.log('timelist', timeList)
     return (

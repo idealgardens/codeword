@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from 'actions/clients'
-import { startCase } from 'lodash'
+import { startCase, filter } from 'lodash'
 import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
 import ClientsTile from 'components/ClientsTile/ClientsTile'
 import styles from './Location.scss'
-
+import { getTsheetsFormat } from 'utils'
 type Props = {
   name: String,
   sheets: Array,
@@ -21,15 +21,16 @@ export class Location extends Component {
   }
 
   render () {
-    console.log('this.props', this.props)
+    console.log('location props', this.props)
     const { name, sheets, params, users, clients } = this.props
+    const locationUsers = filter(sheets, { location: getTsheetsFormat(name) })
     return (
       <div className={styles.container}>
         <div className={styles.header}>
           {name}
         </div>
         <ClientsTile clients={clients} />
-        <LocationDetailTile name={name} sheets={sheets} users={users} />
+        <LocationDetailTile name={name} sheets={sheets} users={locationUsers} />
       </div>
     )
   }

@@ -18,3 +18,18 @@ export function getUser (username) {
     }
   }
 }
+
+// export function getUsersByLocation (location) {
+//   if (!location) {
+//     throw new Error('Username is required to get user data')
+//   }
+//   return (dispatch) => {
+//     dispatch()
+//   }
+// }
+// export function getUsersByLocationRequest (location) {
+//
+//   return {
+//     type: types.GET_USERS
+//   }
+// }

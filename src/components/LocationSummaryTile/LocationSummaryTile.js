@@ -13,10 +13,6 @@ import { Link } from 'react-router'
 
 import styles from './LocationSummaryTile.scss'
 
-const tileStyle = {
-  flexBasis: '28%',
-  minWidth: '4rem'
-}
 type Props = {
   name: String,
   sheets: Array
@@ -29,7 +25,7 @@ export default class LocationSummaryTile extends Component {
     const totalTime = Math.ceil(reduce(sheets.map(sheet => sheet.duration), (sum, n) => sum + n) / 3600)
     name = name.replace('(', '').replace('?)', '').split(',')[0] // remove tsheets weird name wrapper
     return (
-      <Paper style={tileStyle}>
+      <Paper className={styles.container}>
         <Toolbar style={{backgroundColor: 'white'}}>
           <ToolbarTitle className={styles.title} text={name} />
           <ToolbarGroup float='right'>

@@ -44,7 +44,11 @@ export default class Home extends Component {
                 <CircularProgress color='#EB8C01' mode='indeterminate' size={2} />
               </div>
             )
-            : locationList
+            : (
+              <div className={styles.tiles}>
+                {locationList}
+              </div>
+            )
           }
         </div>
       </div>
@@ -53,18 +57,17 @@ export default class Home extends Component {
 }
 
 // Place state of redux store into props of component
-function mapStateToProps (state) {
-  return {
+const mapStateToProps = (state) => (
+  {
     router: state.router,
     isFetching: state.sheets.isFetching,
     users: state.users.items,
     sheets: state.sheets.items
   }
-}
+)
 
 // Place action methods into props
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators(Actions, dispatch)
-}
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(Actions, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

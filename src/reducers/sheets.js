@@ -23,14 +23,14 @@ export default function sheets (state = {
         error: action.payload
       })
     case GET_SHEETS_SUCCESS:
-      if (!action || !action.payload || !action.payload.results) {
+      if (!action || !action.payload) {
         console.error('No timesheets found', action)
         return state
       }
-      console.log('get sheets success:', action.payload.results)
+      console.log('get sheets success:', action.payload)
       return Object.assign({}, state, {
         isFetching: false,
-        items: toArray(action.payload.results.timesheets)
+        items: toArray(action.payload)
       })
     default:
       return state
