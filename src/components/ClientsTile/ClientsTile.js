@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Paper } from 'material-ui'
 import CircularProgress from 'material-ui/CircularProgress'
+import RaisedButton from 'material-ui/RaisedButton'
 import {
   Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn
@@ -24,6 +25,9 @@ export class ClientsTile extends Component {
         <TableRow key={`Sheet-${i}`}>
           <TableRowColumn>{client.name}</TableRowColumn>
           <TableRowColumn>{client.scopedHours}</TableRowColumn>
+          <TableRowColumn>
+            <RaisedButton label='Update' className={styles.update} />
+          </TableRowColumn>
         </TableRow>
       )
     }) : null
@@ -38,6 +42,7 @@ export class ClientsTile extends Component {
               <TableRow>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Scoped Hours</TableHeaderColumn>
+                <TableHeaderColumn>Open</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>

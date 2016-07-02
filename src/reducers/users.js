@@ -1,7 +1,10 @@
 import {
   GET_SHEETS_REQUEST,
   GET_SHEETS_SUCCESS,
-  GET_SHEETS_FAILURE
+  GET_SHEETS_FAILURE,
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAILURE
 } from '../constants/ActionTypes'
 export default function users (state = {
   isFetching: false,
@@ -21,13 +24,35 @@ export default function users (state = {
       })
     case GET_SHEETS_SUCCESS:
       console.log('action:', action.payload)
-      if (!action.payload || !action.payload.supplemental_data) {
+      if (!action.payload) {
         console.error('No users found')
         return state
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload.supplemental_data.users,
+        items: action.payload,
+        didInvalidate: false
+      })
+    case GET_USERS_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+    case GET_USERS_FAILURE:
+      console.error('error getting sheets:', action)
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.payload
+      })
+    case GET_USERS_SUCCESS:
+      console.log('action:', action.payload)
+      if (!action.payload) {
+        console.error('No users found')
+        return state
+      }
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.payload,
         didInvalidate: false
       })
     default:

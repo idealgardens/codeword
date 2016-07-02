@@ -20,16 +20,12 @@ export class LocationDetailTile extends Component {
   render () {
     const { sheets, users, isLoading, name } = this.props
     console.log('sheets:', {sheets, users})
-    let idsList = []
-    const sheetsList = users ? users.map((sheet, i) => {
-      const user = find(users, { id: sheet.user_id })
-      idsList.push(sheet.user_id)
+    const sheetsList = users ? users.map((user, i) => {
       if (!user) {
         return (
           <TableRow key={`Sheet-${i}`}>
-            <TableRowColumn>{sheet.user_id}</TableRowColumn>
-            <TableRowColumn>{sheet.jobcode_id || 'John'}</TableRowColumn>
-            <TableRowColumn>{sheet.location}</TableRowColumn>
+            <TableRowColumn>{user.login}</TableRowColumn>
+            <TableRowColumn>{user.first_name} {user.last_name}</TableRowColumn>
           </TableRow>
         )
       }
@@ -37,41 +33,42 @@ export class LocationDetailTile extends Component {
         <TableRow key={`Sheet-${i}`}>
           <TableRowColumn>{user.username}</TableRowColumn>
           <TableRowColumn>{user.first_name || 'John'} {user.last_name || 'Smith'}</TableRowColumn>
-          <TableRowColumn>{sheet.location}</TableRowColumn>
         </TableRow>
       )
     }) : null
-    console.log('idsList', idsList)
-    const timeList = find(sheets, { user_id: 41352 })
-    console.log('timelist', timeList)
     return (
       <div className={styles.container}>
         <Paper className={styles.pane} zDepth={1}>
           <div className={styles.name}>
-            {name}
+            Personnel
           </div>
-          <Table>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn>Username</TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Location</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-                {
-                  isLoading
-                  ? (
+            {
+              isLoading || !users || !users.length
+              ? (
+                <Table fixedHeader={false} style={{minHeight: '5rem'}}>
+                  <TableBody displayRowCheckbox={false}>
                     <TableRow>
-                      <TableRowColumn className={styles.loading}>
-                        <CircularProgress size={1.5} />
+                      <TableRowColumn className={styles.progress}>
+                        <CircularProgress color='#EB8C01' size={1.5} />
                       </TableRowColumn>
                     </TableRow>
-                  )
-                  : sheetsList
-                }
-            </TableBody>
-          </Table>
+                  </TableBody>
+                </Table>
+              )
+              : (
+                <Table>
+                  <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+                    <TableRow>
+                      <TableHeaderColumn>Email</TableHeaderColumn>
+                      <TableHeaderColumn>Name</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                    {sheetsList}
+                  </TableBody>
+                </Table>
+              )
+            }
         </Paper>
       </div>
     )
