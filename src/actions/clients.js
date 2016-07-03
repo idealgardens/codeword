@@ -4,37 +4,32 @@ import {
   GET_CLIENTS_FAILURE
 } from '../constants/ActionTypes'
 import { getFirebase } from 'utils/firebase'
+const firebase = getFirebase()
 
 export function getClients () {
   return (dispatch, getState) => {
-    dispatch(requestSheets())
-    getFirebase().ref('clients').on('value', (snap) => {
-      console.log('data from firebase:', snap.val())
-      dispatch(receiveSheets(snap.val()))
-    })
+    dispatch(requestClients())
+    firebase.ref('clients').on('value', (snap) => {
+      // console.log('data from firebase:', snap.val())
+      dispatch(receiveClients(snap.val()))
+    }, (error) => dispatch(receiveClientsError(error)))
   }
 }
-export function requestSheets (sheets) {
+export function requestClients (sheets) {
   return {
     type: GET_CLIENTS_REQUEST,
     payload: sheets
   }
 }
-export function receiveSheets (sheets) {
+export function receiveClients (sheets) {
   return {
     type: GET_CLIENTS_SUCCESS,
     payload: sheets
   }
 }
-export function removeSheets (sheets) {
+export function receiveClientsError (error) {
   return {
-    type: REMOVE_CLIENTS,
-    payload: sheets
-  }
-}
-export function updateSheets (sheets) {
-  return {
-    type: UPDATE_CLIENTS,
-    payload: sheets
+    type: GET_CLIENTS_FAILURE,
+    payload: error
   }
 }

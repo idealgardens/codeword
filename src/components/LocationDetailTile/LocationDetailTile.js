@@ -6,7 +6,6 @@ import {
   TableHeaderColumn, TableRow, TableRowColumn
   } from 'material-ui/Table'
 import styles from './LocationDetailTile.scss'
-import { find } from 'lodash'
 
 type Props = {
   name: String,
@@ -18,7 +17,7 @@ export class LocationDetailTile extends Component {
   props: Props
 
   render () {
-    const { sheets, users, isLoading, name } = this.props
+    const { sheets, users, isLoading } = this.props
     console.log('sheets:', {sheets, users})
     const sheetsList = users ? users.map((user, i) => {
       if (!user) {

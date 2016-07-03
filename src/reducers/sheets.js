@@ -27,7 +27,6 @@ export default function sheets (state = {
         console.error('No timesheets found', action)
         return state
       }
-      console.log('get sheets success:', action.payload)
       return Object.assign({}, state, {
         isFetching: false,
         items: toArray(action.payload)

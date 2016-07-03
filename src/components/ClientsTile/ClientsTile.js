@@ -7,7 +7,6 @@ import {
   TableHeaderColumn, TableRow, TableRowColumn
   } from 'material-ui/Table'
 import styles from './ClientsTile.scss'
-import { find } from 'lodash'
 
 type Props = {
   name: String,
@@ -18,7 +17,7 @@ export class ClientsTile extends Component {
   props: Props
 
   render () {
-    const { clients, isLoading, name } = this.props
+    const { clients, isLoading } = this.props
     console.log('clients:', {clients})
     const clientsList = clients ? clients.map((client, i) => {
       return (

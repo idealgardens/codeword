@@ -6,16 +6,16 @@ const locations = [
     state: 'NY'
   },
   {
+    city: 'San Francisco',
+    state: 'CA'
+  },
+  {
     city: 'Lehi',
     state: 'UT'
   },
   {
     city: 'Orem',
     state: 'UT'
-  },
-  {
-    city: 'San Fransisco',
-    state: 'CA'
   },
   {
     city: 'Manassas',
@@ -29,7 +29,6 @@ const locations = [
 
 export const getTsheetsFormat = (camelCase) => {
   const { city, state } = find(locations, { city: startCase(camelCase) })
-  console.log('tsheets format:', `(${city}, ${state}?)`)
   return `(${city}, ${state}?)`
 }
 export default { getTsheetsFormat }

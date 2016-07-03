@@ -1,19 +1,11 @@
 import {
-  ADD_SHEETS,
   GET_SHEETS_SUCCESS,
   GET_SHEETS_REQUEST,
-  GET_SHEETS_FAILURE,
-  REMOVE_SHEETS,
-  UPDATE_SHEETS
+  GET_SHEETS_FAILURE
 } from '../constants/ActionTypes'
 // import { CALL_API } from 'redux-api-middleware'
 import { getFirebase } from 'utils/firebase'
-export function addSheets (sheets) {
-  return {
-    type: ADD_SHEETS,
-    payload: sheets
-  }
-}
+
 // Get from TSheets API
 // export function getSheets () {
 //   return {
@@ -29,9 +21,9 @@ export function getSheets () {
   return (dispatch, getState) => {
     dispatch(requestSheets())
     getFirebase().ref('tsheets/timesheets').once('value', (snap) => {
-      console.log('data from firebase:', snap.val())
+      // console.log('data from firebase:', snap.val())
       dispatch(receiveSheets(snap.val()))
-    })
+    }, (error) => dispatch(receiveSheetsError(error)))
   }
 }
 
@@ -47,15 +39,9 @@ export function receiveSheets (sheets) {
     payload: sheets
   }
 }
-export function removeSheets (sheets) {
+export function receiveSheetsError (error) {
   return {
-    type: REMOVE_SHEETS,
-    payload: sheets
-  }
-}
-export function updateSheets (sheets) {
-  return {
-    type: UPDATE_SHEETS,
-    payload: sheets
+    type: GET_SHEETS_FAILURE,
+    payload: error
   }
 }
