@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Paper } from 'material-ui'
+import CircularProgress from 'material-ui/CircularProgress'
 import {
   Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn
@@ -7,50 +8,68 @@ import {
 import styles from './LocationDetailTile.scss'
 
 type Props = {
-  name: String
-};
+  name: String,
+  sheets: Array,
+  users: Array,
+  isLoading: Boolean
+}
 export class LocationDetailTile extends Component {
-  props: Props;
+  props: Props
 
   render () {
-    const { name } = this.props
+    const { sheets, users, isLoading } = this.props
+    console.log('sheets:', {sheets, users})
+    const sheetsList = users ? users.map((user, i) => {
+      if (!user) {
+        return (
+          <TableRow key={`Sheet-${i}`}>
+            <TableRowColumn>{user.login}</TableRowColumn>
+            <TableRowColumn>{user.first_name} {user.last_name}</TableRowColumn>
+          </TableRow>
+        )
+      }
+      return (
+        <TableRow key={`Sheet-${i}`}>
+          <TableRowColumn>{user.username}</TableRowColumn>
+          <TableRowColumn>{user.first_name || 'John'} {user.last_name || 'Smith'}</TableRowColumn>
+        </TableRow>
+      )
+    }) : null
     return (
-      <Paper className={styles.container} {...this.props}>
-        <div className={styles.name}>
-          {name}
-        </div>
-        <Table>
-          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn>Company Name</TableHeaderColumn>
-              <TableHeaderColumn>Scoped Hours</TableHeaderColumn>
-              <TableHeaderColumn>Complete Hours</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false} stripedRows>
-            <TableRow>
-              <TableRowColumn>1</TableRowColumn>
-              <TableRowColumn>John Smith</TableRowColumn>
-              <TableRowColumn>Employed</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>2</TableRowColumn>
-              <TableRowColumn>Randal White</TableRowColumn>
-              <TableRowColumn>Unemployed</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>3</TableRowColumn>
-              <TableRowColumn>Stephanie Sanders</TableRowColumn>
-              <TableRowColumn>Employed</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>4</TableRowColumn>
-              <TableRowColumn>Steve Brown</TableRowColumn>
-              <TableRowColumn>Employed</TableRowColumn>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Paper>
+      <div className={styles.container}>
+        <Paper className={styles.pane} zDepth={1}>
+          <div className={styles.name}>
+            Personnel
+          </div>
+            {
+              isLoading || !users || !users.length
+              ? (
+                <Table fixedHeader={false} style={{minHeight: '5rem'}}>
+                  <TableBody displayRowCheckbox={false}>
+                    <TableRow>
+                      <TableRowColumn className={styles.progress}>
+                        <CircularProgress color='#EB8C01' size={1.5} />
+                      </TableRowColumn>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              )
+              : (
+                <Table>
+                  <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+                    <TableRow>
+                      <TableHeaderColumn>Email</TableHeaderColumn>
+                      <TableHeaderColumn>Name</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                    {sheetsList}
+                  </TableBody>
+                </Table>
+              )
+            }
+        </Paper>
+      </div>
     )
   }
 }

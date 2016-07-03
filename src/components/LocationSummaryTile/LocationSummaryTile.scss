@@ -1,5 +1,13 @@
 @import '../../variables';
-
+.container {
+  flex-basis: 28%;
+  min-width: 4rem;
+  margin-bottom: 3rem;
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+    min-width: 100%;
+  }
+}
 .title {
   color: $mediumGray;
 }
