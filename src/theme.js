@@ -1,7 +1,7 @@
 import {
-  blueGrey100, blueGrey500, blueGrey700,
+  deepOrange100, deepOrange500, deepOrange700,
   pinkA200, tealA100, lightBlue500, grey900,
-  white, grey400, darkBlack
+  white, grey400, darkBlack, blueGrey500
 } from 'material-ui/styles/colors'
 import {fade} from 'material-ui/utils/colorManipulator'
 import Spacing from 'material-ui/styles/spacing'
@@ -12,10 +12,10 @@ export default {
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: blueGrey500,
-    primary2Color: blueGrey700,
-    primary3Color: blueGrey100,
-    accent1Color: pinkA200,
+    primary1Color: deepOrange500,
+    primary2Color: deepOrange700,
+    primary3Color: deepOrange100,
+    accent1Color: blueGrey500,
     accent2Color: tealA100,
     accent3Color: lightBlue500,
     textColor: grey900,

@@ -31,9 +31,7 @@ export class Location extends Component {
   componentDidMount () {
     this.props.getClients()
     this.props.getUsers()
-    if (!this.props.sheets.length) {
-      this.props.getSheets()
-    }
+    this.props.getSheets()
   }
 
   updateScopedHours = () => {
@@ -79,10 +77,14 @@ export class Location extends Component {
           open={open}
           onRequestClose={this.handleClose}
          >
-          <TextField
-            hintText={currentClient.scopedHours}
-            onChange={this.handleHoursChange}
-          />
+          <div className={styles.dialog}>
+            <TextField
+              hintText={currentClient.scopedHours}
+              onChange={this.handleHoursChange}
+              className={styles.input}
+            />
+            hours
+          </div>
         </Dialog>
       </div>
     )

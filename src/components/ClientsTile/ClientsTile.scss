@@ -16,6 +16,12 @@
   font-weight: 300;
   text-transform: uppercase;
 }
+.column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 5rem;
+}
 .update {
 
 }

@@ -28,7 +28,9 @@ export class ClientsTile extends Component {
       return (
         <TableRow key={`Sheet-${i}`}>
           <TableRowColumn>{client.name}</TableRowColumn>
-          <TableRowColumn>{client.scopedHours}</TableRowColumn>
+          <TableRowColumn className={styles.column}>
+            {client.scopedHours}
+          </TableRowColumn>
           <TableRowColumn>
             <RaisedButton
               label='Update'
@@ -49,8 +51,8 @@ export class ClientsTile extends Component {
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Scoped Hours</TableHeaderColumn>
-                <TableHeaderColumn>Open</TableHeaderColumn>
+                <TableHeaderColumn className={styles.column}>Scoped Hours</TableHeaderColumn>
+                <TableHeaderColumn />
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
