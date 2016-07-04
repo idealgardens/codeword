@@ -1,9 +1,10 @@
 import {
   GET_CLIENTS_REQUEST,
   GET_CLIENTS_SUCCESS,
-  GET_CLIENTS_FAILURE
+  GET_CLIENTS_FAILURE,
+  UPDATE_CLIENT_SUCCESS
 } from '../constants/ActionTypes'
-import { groupBy } from 'lodash'
+import { groupBy, camelCase } from 'lodash'
 export default function clients (state = {
   isFetching: false
 }, action) {
@@ -30,6 +31,20 @@ export default function clients (state = {
         items: groupBy(action.payload, 'location'),
         didInvalidate: false
       })
+    // case UPDATE_CLIENT_SUCCESS:
+    //   console.log('action:', action.payload, state)
+    //   if (!action.payload) {
+    //     console.error('No users found')
+    //     return state
+    //   }
+    //   let newItems = state.items
+    //   newItems[camelCase(action.payload.name)] = action.client
+    //   console.log('newItems', newItems)
+    //   return Object.assign({}, state, {
+    //     isFetching: false,
+    //     items: groupBy(newItems, 'location'),
+    //     didInvalidate: false
+    //   })
     default:
       return state
   }

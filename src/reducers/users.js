@@ -44,7 +44,6 @@ export default function users (state = {
         error: action.payload
       })
     case GET_USERS_SUCCESS:
-      console.log('action:', action.payload)
       if (!action.payload) {
         console.error('No users found')
         return state

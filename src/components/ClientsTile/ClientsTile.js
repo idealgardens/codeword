@@ -11,21 +11,24 @@ import styles from './ClientsTile.scss'
 type Props = {
   name: String,
   clients: Array,
-  isLoading: Boolean
+  isLoading: Boolean,
+  onUpdateClick: Function
 }
 export class ClientsTile extends Component {
   props: Props
-
+  handleUpdateClick = (client) => {
+    if (this.props.onUpdateClick) this.props.onUpdateClick(client)
+  }
   render () {
     const { clients, isLoading } = this.props
-    console.log('clients:', {clients})
+    // console.log('clients:', {clients})
     const clientsList = clients ? clients.map((client, i) => {
       return (
         <TableRow key={`Sheet-${i}`}>
           <TableRowColumn>{client.name}</TableRowColumn>
           <TableRowColumn>{client.scopedHours}</TableRowColumn>
           <TableRowColumn>
-            <RaisedButton label='Update' className={styles.update} />
+            <RaisedButton label='Update' className={styles.update} onClick={this.handleUpdateClick.bind(this, client)}/>
           </TableRowColumn>
         </TableRow>
       )

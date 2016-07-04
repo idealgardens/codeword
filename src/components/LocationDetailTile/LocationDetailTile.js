@@ -18,7 +18,7 @@ export class LocationDetailTile extends Component {
 
   render () {
     const { sheets, users, isLoading } = this.props
-    console.log('sheets:', {sheets, users})
+    // console.log('sheets:', {sheets, users})
     const sheetsList = users ? users.map((user, i) => {
       if (!user) {
         return (
