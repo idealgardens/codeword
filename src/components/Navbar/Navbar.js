@@ -44,7 +44,7 @@ export class Navbar extends Component {
     const mainMenu = (
       <div className={styles.menu}>
         <FlatButton label='Sign Up' style={buttonStyle} onClick={this.selectItem.bind(this, null, 'signup')} />
-        <FlatButton label='Login' style={buttonStyle} onClick={this.selectItem.bind(this, null, 'login')} />
+        <FlatButton label='Sign In' style={buttonStyle} onClick={this.selectItem.bind(this, null, 'login')} />
       </div>
     )
     const rightMenu = username ? (

@@ -79,7 +79,7 @@ export default class LoginForm extends Component {
         />
         <div className={styles.submit}>
           <RaisedButton
-            label='Login'
+            label='Sign In'
             primary
             type='submit'
             disabled={this.props.account && this.props.account.isFetching}

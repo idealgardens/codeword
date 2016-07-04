@@ -29,7 +29,6 @@ export function getUsers () {
   return (dispatch, getState) => {
     dispatch(requestUsers())
     firebase.ref('tsheets/users').on('value', (snap) => {
-      console.log('data from firebase:', snap.val())
       if (snap.val() === null) return dispatch(getUsersFailure(Error('Users Not found')))
       dispatch(receiveUsers(snap.val()))
     }, (error) => {

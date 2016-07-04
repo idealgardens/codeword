@@ -1,8 +1,8 @@
-import React from 'react'
+/* global describe it expect */
 import ClientsTile from 'components/ClientsTile/ClientsTile'
 
 describe('(Component) ClientsTile', () => {
-  it('should exist', () => {
-
+  it('exists', () => {
+    expect(ClientsTile).to.exist
   })
 })
