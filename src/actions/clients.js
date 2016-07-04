@@ -40,13 +40,9 @@ export function receiveClientsError (error) {
 
 export function updateClient (client, scopedHours) {
   client.scopedHours = scopedHours
-  console.log('calling update with:', client, scopedHours)
-  const clientKey = `clients/${camelCase(client.name)}`
-  console.log('clientKey:', clientKey)
   return (dispatch, getState) => {
     dispatch(requestUpdateClient(client))
     firebase.ref(`clients/${camelCase(client.name)}`).update(client, (error) => {
-      console.log('update called', client)
       if (error) return dispatch(receiveClientUpdateError(error))
       dispatch(receiveClientUpdate(client))
     })

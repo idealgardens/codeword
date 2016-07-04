@@ -1,10 +1,10 @@
 import {
   GET_CLIENTS_REQUEST,
   GET_CLIENTS_SUCCESS,
-  GET_CLIENTS_FAILURE,
-  UPDATE_CLIENT_SUCCESS
+  GET_CLIENTS_FAILURE
 } from '../constants/ActionTypes'
-import { groupBy, camelCase } from 'lodash'
+import { groupBy } from 'lodash'
+
 export default function clients (state = {
   isFetching: false
 }, action) {
@@ -21,7 +21,6 @@ export default function clients (state = {
         error: action.payload
       })
     case GET_CLIENTS_SUCCESS:
-      console.log('action:', action.payload)
       if (!action.payload) {
         console.error('No users found')
         return state
@@ -31,20 +30,10 @@ export default function clients (state = {
         items: groupBy(action.payload, 'location'),
         didInvalidate: false
       })
+    // Updated because of firebase.on
     // case UPDATE_CLIENT_SUCCESS:
     //   console.log('action:', action.payload, state)
-    //   if (!action.payload) {
-    //     console.error('No users found')
-    //     return state
-    //   }
-    //   let newItems = state.items
-    //   newItems[camelCase(action.payload.name)] = action.client
-    //   console.log('newItems', newItems)
-    //   return Object.assign({}, state, {
-    //     isFetching: false,
-    //     items: groupBy(newItems, 'location'),
-    //     didInvalidate: false
-    //   })
+    //   return state
     default:
       return state
   }

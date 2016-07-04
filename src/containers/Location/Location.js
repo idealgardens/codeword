@@ -11,7 +11,6 @@ import styles from './Location.scss'
 import { getTsheetsFormat } from 'utils'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
 type Props = {
@@ -21,7 +20,8 @@ type Props = {
   clients: Array,
   getSheets: Function,
   getUsers: Function,
-  getClients: Function
+  getClients: Function,
+  updateClient: Function
 }
 export class Location extends Component {
   props: Props
@@ -36,60 +36,53 @@ export class Location extends Component {
     }
   }
 
-  updateScopedHours = (e, param2) => {
-    console.log('updateScopedHours called', e, param2)
+  updateScopedHours = () => {
     this.props.updateClient(this.state.currentClient, this.state.newHours)
     this.setState({ open: false })
   }
 
   handleOpen = (client) => {
-    console.log('open called with:', client)
     this.setState({ open: true, currentClient: client })
   }
 
-  handleClose = () => {
-    this.setState({open: false})
-  }
+  handleClose = () => this.setState({ open: false })
 
-  handleHoursChange = (e) => {
-    console.log('handleHoursChange', e.target.value)
-    this.setState({ newHours: e.target.value })
-  }
+  handleHoursChange = (e) => this.setState({ newHours: e.target.value })
 
   render () {
     const { name, sheets, users, clients } = this.props
-    const { currentClient, open  } = this.state
+    const { currentClient, open } = this.state
     const actions = [
-     <FlatButton
-       label="Cancel"
-       secondary={true}
-       onTouchTap={this.handleClose}
+      <FlatButton
+        label='Cancel'
+        secondary
+        onTouchTap={this.handleClose}
      />,
-     <FlatButton
-       label="Submit"
-       primary={true}
-       keyboardFocused={true}
-       onTouchTap={this.updateScopedHours}
-     />,
-   ];
+      <FlatButton
+        label='Update'
+        primary
+        keyboardFocused
+        onTouchTap={this.updateScopedHours}
+     />
+    ]
     return (
       <div className={styles.container}>
         <div className={styles.header}>
           {name}
         </div>
-        <ClientsTile clients={clients} onUpdateClick={this.handleOpen}/>
+        <ClientsTile clients={clients} onUpdateClick={this.handleOpen} />
         <LocationDetailTile name={name} sheets={sheets} users={users} />
         <Dialog
-           title={`${currentClient.name}'s Scoped Hours`}
-           actions={actions}
-           modal={false}
-           open={open}
-           onRequestClose={this.handleClose}
+          title={`${currentClient.name}'s Scoped Hours`}
+          actions={actions}
+          modal={false}
+          open={open}
+          onRequestClose={this.handleClose}
          >
-         <TextField
-           hintText={currentClient.scopedHours}
-           onChange={this.handleHoursChange}
-         />
+          <TextField
+            hintText={currentClient.scopedHours}
+            onChange={this.handleHoursChange}
+          />
         </Dialog>
       </div>
     )

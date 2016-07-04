@@ -9,7 +9,6 @@ import styles from './LocationDetailTile.scss'
 
 type Props = {
   name: String,
-  sheets: Array,
   users: Array,
   isLoading: Boolean
 }
@@ -17,7 +16,7 @@ export class LocationDetailTile extends Component {
   props: Props
 
   render () {
-    const { sheets, users, isLoading } = this.props
+    const { users, isLoading } = this.props
     // console.log('sheets:', {sheets, users})
     const sheetsList = users ? users.map((user, i) => {
       if (!user) {

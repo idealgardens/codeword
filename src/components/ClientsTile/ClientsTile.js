@@ -16,9 +16,11 @@ type Props = {
 }
 export class ClientsTile extends Component {
   props: Props
+
   handleUpdateClick = (client) => {
     if (this.props.onUpdateClick) this.props.onUpdateClick(client)
   }
+
   render () {
     const { clients, isLoading } = this.props
     // console.log('clients:', {clients})
@@ -28,7 +30,11 @@ export class ClientsTile extends Component {
           <TableRowColumn>{client.name}</TableRowColumn>
           <TableRowColumn>{client.scopedHours}</TableRowColumn>
           <TableRowColumn>
-            <RaisedButton label='Update' className={styles.update} onClick={this.handleUpdateClick.bind(this, client)}/>
+            <RaisedButton
+              label='Update'
+              className={styles.update}
+              onClick={this.handleUpdateClick.bind(this, client)}
+            />
           </TableRowColumn>
         </TableRow>
       )
