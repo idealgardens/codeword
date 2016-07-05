@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import { Paper } from 'material-ui'
 import CircularProgress from 'material-ui/CircularProgress'
 import RaisedButton from 'material-ui/RaisedButton'
+import IconButton from 'material-ui/IconButton'
 import {
   Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn
-  } from 'material-ui/Table'
+} from 'material-ui/Table'
+import OpenIcon from 'react-material-icons/icons/navigation/more-vert'
+import CloseIcon from 'react-material-icons/icons/navigation/more-horiz'
+import ClientRow from 'components/ClientRow/ClientRow'
+
 import styles from './ClientsTile.scss'
+import { indexOf, without } from 'lodash'
 
 type Props = {
   name: String,
@@ -17,41 +23,32 @@ type Props = {
 export class ClientsTile extends Component {
   props: Props
 
-  handleUpdateClick = (client) => {
-    if (this.props.onUpdateClick) this.props.onUpdateClick(client)
-  }
-
   render () {
     const { clients, isLoading } = this.props
     // console.log('clients:', {clients})
-    const clientsList = clients ? clients.map((client, i) => {
-      return (
-        <TableRow key={`Sheet-${i}`}>
-          <TableRowColumn>{client.name}</TableRowColumn>
-          <TableRowColumn className={styles.column}>
-            {client.scopedHours}
-          </TableRowColumn>
-          <TableRowColumn>
-            <RaisedButton
-              label='Update'
-              className={styles.update}
-              onClick={this.handleUpdateClick.bind(this, client)}
-            />
-          </TableRowColumn>
-        </TableRow>
+    const clientsList = clients ? clients.map((client, i) =>
+      (
+        <ClientRow
+          key={`Client-${i}`}
+          client={client}
+          isLoading={isLoading}
+          onUpdateClick={this.props.onUpdateClick.bind(this, client)}
+        />
       )
-    }) : null
+    ) : null
     return (
       <div className={styles.container}>
         <Paper className={styles.pane} zDepth={1}>
           <div className={styles.name}>
             Clients
           </div>
-          <Table>
+          <Table selectable={false}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn className={styles.column}>Scoped Hours</TableHeaderColumn>
+                <TableHeaderColumn className={styles.column}>
+                  Scoped Hours
+                </TableHeaderColumn>
                 <TableHeaderColumn />
               </TableRow>
             </TableHeader>
