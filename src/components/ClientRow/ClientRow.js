@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import CircularProgress from 'material-ui/CircularProgress'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 
@@ -11,7 +10,6 @@ import CloseIcon from 'react-material-icons/icons/navigation/more-horiz'
 
 import ClientRowHours from 'components/ClientRowHours/ClientRowHours'
 import ClientRowCodes from 'components/ClientRowCodes/ClientRowCodes'
-
 
 import styles from './ClientRow.scss'
 
@@ -41,7 +39,7 @@ export class ClientRow extends Component {
   }
 
   render () {
-    const { client, isLoading } = this.props
+    const { client } = this.props
     // console.log('clients:', {clients})
     if (!this.state.isOpen) {
       return (

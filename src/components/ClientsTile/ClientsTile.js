@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
 import { Paper } from 'material-ui'
 import CircularProgress from 'material-ui/CircularProgress'
-import RaisedButton from 'material-ui/RaisedButton'
-import IconButton from 'material-ui/IconButton'
 import {
   Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn
 } from 'material-ui/Table'
-import OpenIcon from 'react-material-icons/icons/navigation/more-vert'
-import CloseIcon from 'react-material-icons/icons/navigation/more-horiz'
 import ClientRow from 'components/ClientRow/ClientRow'
 
 import styles from './ClientsTile.scss'
-import { indexOf, without } from 'lodash'
 
 type Props = {
   name: String,
@@ -28,12 +23,12 @@ export class ClientsTile extends Component {
     // console.log('clients:', {clients})
     const clientsList = clients ? clients.map((client, i) =>
       (
-        <ClientRow
-          key={`Client-${i}`}
-          client={client}
-          isLoading={isLoading}
-          onUpdateClick={this.props.onUpdateClick.bind(this, client)}
-        />
+      <ClientRow
+        key={`Client-${i}`}
+        client={client}
+        isLoading={isLoading}
+        onUpdateClick={this.props.onUpdateClick.bind(this, client)}
+      />
       )
     ) : null
     return (
