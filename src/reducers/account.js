@@ -3,10 +3,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE
 } from '../actions/account'
-import { toArray } from 'lodash'
 export default function account (state = {
   isFetching: false,
-  items: []
+  items: {}
 }, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -27,7 +26,7 @@ export default function account (state = {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: toArray(action.payload.supplemental_data.users),
+        items: action.payload.supplemental_data.users,
         didInvalidate: false
       })
     default:

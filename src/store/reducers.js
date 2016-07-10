@@ -6,6 +6,7 @@ import users from '../reducers/users'
 import clients from '../reducers/clients'
 import totals from '../reducers/totals'
 import groups from '../reducers/groups'
+import jobcodes from '../reducers/jobcodes'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -17,6 +18,7 @@ export const makeRootReducer = (asyncReducers) => {
     totals,
     groups,
     router,
+    jobcodes,
     ...asyncReducers
   })
 }

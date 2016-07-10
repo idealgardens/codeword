@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getClients, updateClient } from 'actions/clients'
-import { getUsers } from 'actions/users'
-import { getSheets } from 'actions/sheets'
+import * as Actions from 'actions'
 import { startCase, filter, uniq } from 'lodash'
 import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
 import ClientsTile from 'components/ClientsTile/ClientsTile'
@@ -32,6 +31,7 @@ export class Location extends Component {
     this.props.getClients()
     this.props.getSheets()
     this.props.getUsers()
+    this.props.getJobcodes()
   }
 
   updateScopedHours = () => {
@@ -104,7 +104,7 @@ const mapStateToProps = ({ sheets, users, clients, router }) => {
   }
 }
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ getUsers, getClients, updateClient, getSheets }, dispatch)
+  bindActionCreators(Actions, dispatch)
 
 export default connect(
   mapStateToProps,

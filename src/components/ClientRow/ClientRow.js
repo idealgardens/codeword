@@ -43,7 +43,7 @@ export class ClientRow extends Component {
     // console.log('clients:', {clients})
     if (!this.state.isOpen) {
       return (
-        <TableRow {...this.props}>
+        <TableRow>
           <TableRowColumn>{client.name}</TableRowColumn>
           <TableRowColumn className={styles.column}>
             {client.scopedHours}

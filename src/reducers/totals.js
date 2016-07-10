@@ -25,7 +25,6 @@ export default function totals (state = {
         console.error('No users found')
         return state
       }
-      console.log('totals:', action.payload)
       return Object.assign({}, state, {
         isFetching: false,
         items: action.payload.totals

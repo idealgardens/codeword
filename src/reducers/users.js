@@ -1,7 +1,8 @@
 import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
-  GET_USERS_FAILURE
+  GET_USERS_FAILURE,
+  GET_SHEETS_SUCCESS
 } from '../constants/ActionTypes'
 export default function users (state = {
   isFetching: false,
@@ -26,9 +27,19 @@ export default function users (state = {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload,
+        items: action.payload.results.users,
         didInvalidate: false
       })
+    // case GET_SHEETS_SUCCESS:
+    //   if (!action || !action.payload) {
+    //     console.error('No timesheets found', action)
+    //     return state
+    //   }
+    //   console.log('users in supplemental_data:', action.payload.supplemental_data.users)
+    //   return Object.assign({}, state, {
+    //     isFetching: false,
+    //     items: action.payload.supplemental_data.users
+    //   })
     default:
       return state
   }
