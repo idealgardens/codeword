@@ -10,29 +10,40 @@ import _debug from 'debug'
 import config from '../config'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
-import { timesheets } from 'tsheets-sdk'
+import * as TSheets from 'tsheets-sdk'
 import json from 'koa-json'
+import logger from 'koa-logger'
+import bodyParser from 'koa-bodyparser'
 
 const debug = _debug('app:server')
 const paths = config.utils_paths
 const app = new Koa()
 app.use(json())
+app.use(logger())
+app.use(bodyParser())
 
-app.use(route.get('/api/sheets', getSheets))
+app.use(route.get('/api/:resource', getCallTSheets))
+app.use(route.post('/api/report', getReport))
 
-function *getSheets (req) {
-  console.log('request:', req)
-  console.log('request.body:', req.body)
-  yield timesheets.get()
-    .then((apiRes) => {
-      console.log('api response:', apiRes)
-      return this.body = apiRes
-    })
-    .catch((error) => {
-      console.log('error:', error)
-      throw new Error(error || { message: 'error getting sheets' })
-    })
+function *getCallTSheets (resource) {
+  if (!TSheets[resource]) return this.throw(`${resource} is not a resource. Check request.`, 404)
+  if (!this.query) return this.throw('Query parameters required to query TSheets', 400)
+  yield TSheets[resource].get(this.query)
+    .then((res) => this.body = res)
+    .catch((error) => this.throw(error.message, error.code))
 }
+// Enable koa-proxy if it has been enabled in the config.
+if (config.proxy && config.proxy.enabled) {
+  app.use(convert(proxy(config.proxy.options)))
+}
+
+function *getReport () {
+  if (!this.request.body) return this.throw('Query parameters required to build TSheets report', 400)
+  yield TSheets.reports.getProjectReport(this.request.body)
+    .then((apiRes) => this.body = apiRes)
+    .catch((error) => this.throw(error.message, error.code))
+}
+
 // Enable koa-proxy if it has been enabled in the config.
 if (config.proxy && config.proxy.enabled) {
   app.use(convert(proxy(config.proxy.options)))
