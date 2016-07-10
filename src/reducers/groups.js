@@ -1,34 +1,34 @@
 import {
-  GET_TOTALS_REQUEST,
-  GET_TOTALS_SUCCESS,
-  GET_TOTALS_FAILURE
+  GET_GROUPS_REQUEST,
+  GET_GROUPS_SUCCESS,
+  GET_GROUPS_FAILURE
 } from '../constants/ActionTypes'
-export default function totals (state = {
+
+export default function groups (state = {
   isFetching: false,
   items: {}
 }, action) {
   switch (action.type) {
-    case GET_TOTALS_REQUEST:
+    case GET_GROUPS_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
       })
-    case GET_TOTALS_FAILURE:
+    case GET_GROUPS_FAILURE:
       console.error('error getting sheets:', action)
       return Object.assign({}, state, {
         isFetching: false,
-        status: action.payload.status,
-        error: action.payload.statusText
+        error: action.payload
       })
-    case GET_TOTALS_SUCCESS:
-      if (!action.payload) {
-        console.error('No users found')
+    case GET_GROUPS_SUCCESS:
+      if (!action || !action.payload) {
+        console.error('No timesheets found', action)
         return state
       }
-      console.log('totals:', action.payload)
+      console.log('groups success:', action.payload)
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload.totals
+        items: action.payload.results.groups
       })
     default:
       return state
