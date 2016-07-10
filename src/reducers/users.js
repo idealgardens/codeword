@@ -1,8 +1,7 @@
 import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
-  GET_USERS_FAILURE,
-  GET_SHEETS_SUCCESS
+  GET_USERS_FAILURE
 } from '../constants/ActionTypes'
 export default function users (state = {
   isFetching: false,

@@ -15,7 +15,7 @@ export function getUser (username) {
   return {
     [CALL_API]: {
       headers: { 'Content-Type': 'application/json' },
-      endpoint: `/api/users`,
+      endpoint: '/api/users',
       method: 'get',
       types: [
         GET_USER_REQUEST,
@@ -30,7 +30,7 @@ export function getUsers () {
   return {
     [CALL_API]: {
       headers: { 'Content-Type': 'application/json' },
-      endpoint: `/api/users`,
+      endpoint: '/api/users',
       method: 'get',
       types: [
         GET_USERS_REQUEST,

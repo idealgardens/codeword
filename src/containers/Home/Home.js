@@ -30,7 +30,7 @@ export default class Home extends Component {
 
   render () {
     const { totals, isFetching, groups } = this.props
-    console.log('props:', {groups, totals})
+    // console.log('props:', {groups, totals})
     const locationList = map(totals, (total, key) => {
       if (key === '0') return // TODO: Show hours from outside of group
       const { city, initials } = getCity(groups[key].name.toUpperCase())
@@ -69,7 +69,7 @@ export default class Home extends Component {
 const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
   {
     router: router,
-    isFetching: sheets.isFetching,
+    isFetching: sheets.isFetching || totals.isFetching,
     totals: totals.items.groups,
     groups: groups.items,
     users: users.items,

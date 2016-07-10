@@ -6,7 +6,7 @@ import {
 import { CALL_API } from 'redux-api-middleware'
 
 export function getTotals (groupId) {
-  let bodyData = { start_date: '2016-06-01', end_date: 'today'}
+  let bodyData = { start_date: '2016-06-01', end_date: 'today' }
   if (groupId) bodyData.group_ids = groupId
   return {
     [CALL_API]: {

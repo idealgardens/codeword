@@ -25,7 +25,6 @@ export default function groups (state = {
         console.error('No timesheets found', action)
         return state
       }
-      console.log('groups success:', action.payload)
       return Object.assign({}, state, {
         isFetching: false,
         items: action.payload.results.groups

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getClients, updateClient } from 'actions/clients'
 import * as Actions from 'actions'
 import { startCase, filter, uniq } from 'lodash'
 import LocationDetailTile from 'components/LocationDetailTile/LocationDetailTile'
@@ -19,6 +18,7 @@ type Props = {
   clients: Array,
   getSheets: Function,
   getUsers: Function,
+  getJobcodes: Function,
   getClients: Function,
   updateClient: Function
 }
@@ -91,7 +91,7 @@ export class Location extends Component {
   }
 }
 
-const mapStateToProps = ({ sheets, users, clients, router }) => {
+const mapStateToProps = ({ sheets, users, clients, router, totals }) => {
   const name = startCase(window.location.pathname)
   const initials = name.match(/\b(\w)/g).join('')
   const location = getTsheetsFormat(name)
@@ -100,6 +100,7 @@ const mapStateToProps = ({ sheets, users, clients, router }) => {
     name,
     clients: clients.items ? clients.items[initials] || [] : [],
     users: userIdList.map(id => users.items[id] || id),
+    totals: totals.items,
     sheets: sheets.items
   }
 }
