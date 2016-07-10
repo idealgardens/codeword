@@ -1,7 +1,10 @@
 import {
   GET_SHEETS_SUCCESS,
   GET_SHEETS_REQUEST,
-  GET_SHEETS_FAILURE
+  GET_SHEETS_FAILURE,
+  GET_REPORT_SUCCESS,
+  GET_REPORT_REQUEST,
+  GET_REPORT_FAILURE
 } from '../constants/ActionTypes'
 import { CALL_API } from 'redux-api-middleware'
 // import { getFirebase } from 'utils/firebase'
@@ -13,6 +16,23 @@ export function getSheets () {
       endpoint: '/api/sheets',
       method: 'GET',
       types: [ GET_SHEETS_REQUEST, GET_SHEETS_SUCCESS, GET_SHEETS_FAILURE ]
+    }
+  }
+}
+
+// Get from TSheets API
+export function getReport () {
+  return {
+    [CALL_API]: {
+      endpoint: '/api/report',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ start_date: '2016-06-01', end_date: 'today' }),
+      types: [
+        GET_REPORT_REQUEST,
+        GET_REPORT_SUCCESS,
+        GET_REPORT_FAILURE
+      ]
     }
   }
 }

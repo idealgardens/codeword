@@ -8,21 +8,20 @@ import {
   ToolbarGroup
 } from 'material-ui'
 import ClosedIcon from 'react-material-icons/icons/navigation/more-horiz'
-import { reduce, camelCase } from 'lodash'
+import { camelCase } from 'lodash'
 import { Link } from 'react-router'
 
 import styles from './LocationSummaryTile.scss'
 
 type Props = {
   name: String,
-  sheets: Array
+  total: Number
 }
 export default class LocationSummaryTile extends Component {
   props: Props
 
   render () {
-    let { name, sheets } = this.props
-    const totalTime = Math.ceil(reduce(sheets.map(sheet => sheet.duration), (sum, n) => sum + n) / 3600)
+    let { name, total } = this.props
     name = name.replace('(', '').replace('?)', '').split(',')[0] // remove tsheets weird name wrapper
     return (
       <Paper className={styles.container}>
@@ -35,7 +34,7 @@ export default class LocationSummaryTile extends Component {
         <hr className={styles.underline} /><br />
         <div className={styles.diagram}>
           <div className={styles.graph}>
-            <span className={styles.percentage}>{totalTime + 8}%</span>
+            <span className={styles.percentage}>{(Math.ceil(total) / 1600) * 100}%</span>
             <span className={styles.complete}>Complete</span>
             <CircularProgress
               mode='determinate'
@@ -46,7 +45,7 @@ export default class LocationSummaryTile extends Component {
             />
             <CircularProgress
               mode='determinate'
-              value={totalTime}
+              value={(Math.ceil(total) / 1600) * 100}
               color='rgba(255, 94, 58, 1)'
               style={{position: 'absolute'}}
               size={2}
@@ -55,13 +54,13 @@ export default class LocationSummaryTile extends Component {
         </div>
         <div className={styles.hours}>
           <div className={styles.hour}>
-            <span className={`${styles.time} ${styles.positive}`}>{totalTime}</span>
+            <span className={`${styles.time} ${styles.positive}`}>{total}</span>
             <span>Hours</span>
             <span>Completed</span>
           </div>
           <hr className={styles.divider} /><br />
           <div className={styles.hour}>
-            <span className={`${styles.time} ${styles.negative}`}>{50 - totalTime}</span>
+            <span className={`${styles.time} ${styles.negative}`}>{Math.ceil(1600 - total)}</span>
             <span>Hours</span>
             <span>Left</span>
           </div>
