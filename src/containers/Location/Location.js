@@ -30,8 +30,8 @@ export class Location extends Component {
 
   componentDidMount () {
     this.props.getClients()
-    this.props.getUsers()
     this.props.getSheets()
+    this.props.getUsers()
   }
 
   updateScopedHours = () => {
@@ -91,16 +91,16 @@ export class Location extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ sheets, users, clients, router }) => {
   const name = startCase(window.location.pathname)
   const initials = name.match(/\b(\w)/g).join('')
-  // console.log('initials:', initials)
-  const userIdList = uniq(filter(state.sheets.items, { location: getTsheetsFormat(name) }).map(sheet => sheet.user_id))
+  const location = getTsheetsFormat(name)
+  const userIdList = uniq(filter(sheets.items, {location}).map(sheet => sheet.user_id))
   return {
     name,
-    clients: state.clients.items ? state.clients.items[initials] || [] : [],
-    users: userIdList.map(id => state.users.items[id] || id),
-    sheets: state.sheets.items
+    clients: clients.items ? clients.items[initials] || [] : [],
+    users: userIdList.map(id => users.items[id] || id),
+    sheets: sheets.items
   }
 }
 const mapDispatchToProps = (dispatch) =>

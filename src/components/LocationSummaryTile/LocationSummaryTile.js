@@ -22,9 +22,11 @@ export default class LocationSummaryTile extends Component {
 
   render () {
     let { name, total } = this.props
-    const percentComplete = Math.ceil((Math.ceil(total) / 1600) * 100)
+    // TODO: Calculate this based on the current day of the month and the number of users in the location
+    const monthWorkHours = 1600
+    const percentComplete = Math.ceil((Math.ceil(total) / monthWorkHours) * 100)
     const roundedTotal = Math.ceil(total)
-    const hoursLeft = Math.ceil(1600 - total)
+    const hoursLeft = Math.ceil(monthWorkHours - total)
     return (
       <Paper className={styles.container}>
         <Toolbar style={{backgroundColor: 'white'}}>

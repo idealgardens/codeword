@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as Actions from 'actions/sheets'
 import { getTotals } from 'actions/totals'
 import { getGroups } from 'actions/groups'
 import { map } from 'lodash'
+import { getCity } from '../../utils'
 import LocationSummaryTile from 'components/LocationSummaryTile/LocationSummaryTile'
 import CircularProgress from 'material-ui/CircularProgress'
 
@@ -13,9 +13,10 @@ import styles from './Home.scss'
 
 type Props = {
   totals: Object,
+  groups: Object,
   isFetching: Boolean,
   getTotals: Function,
-  getSheets: Function
+  getGroups: Function
 }
 export default class Home extends Component {
   props: Props
@@ -32,8 +33,14 @@ export default class Home extends Component {
     console.log('props:', {groups, totals})
     const locationList = map(totals, (total, key) => {
       if (key === '0') return // TODO: Show hours from outside of group
+      const { city, initials } = getCity(groups[key].name.toUpperCase())
       return (
-        <LocationSummaryTile key={key} name={groups[key].name} total={total} />
+        <LocationSummaryTile
+          key={key}
+          name={city}
+          initials={initials}
+          total={total}
+        />
       )
     })
     return (
