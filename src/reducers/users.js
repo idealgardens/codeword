@@ -26,9 +26,19 @@ export default function users (state = {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload,
+        items: action.payload.results.users,
         didInvalidate: false
       })
+    // case GET_SHEETS_SUCCESS:
+    //   if (!action || !action.payload) {
+    //     console.error('No timesheets found', action)
+    //     return state
+    //   }
+    //   console.log('users in supplemental_data:', action.payload.supplemental_data.users)
+    //   return Object.assign({}, state, {
+    //     isFetching: false,
+    //     items: action.payload.supplemental_data.users
+    //   })
     default:
       return state
   }

@@ -4,6 +4,10 @@ import account from '../reducers/account'
 import sheets from '../reducers/sheets'
 import users from '../reducers/users'
 import clients from '../reducers/clients'
+import totals from '../reducers/totals'
+import groups from '../reducers/groups'
+import jobcodes from '../reducers/jobcodes'
+
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // Add sync reducers here
@@ -11,7 +15,10 @@ export const makeRootReducer = (asyncReducers) => {
     sheets,
     users,
     clients,
+    totals,
+    groups,
     router,
+    jobcodes,
     ...asyncReducers
   })
 }

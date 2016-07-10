@@ -4,8 +4,6 @@ import {
   GET_SHEETS_FAILURE
 } from '../constants/ActionTypes'
 
-import { toArray } from 'lodash'
-
 export default function sheets (state = {
   isFetching: false,
   items: []
@@ -29,7 +27,7 @@ export default function sheets (state = {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: toArray(action.payload)
+        items: action.payload.results.timesheets
       })
     default:
       return state

@@ -1,33 +1,33 @@
 import {
-  LOGIN_SUCCESS,
-  LOGIN_REQUEST,
-  LOGIN_FAILURE
-} from '../actions/account'
-export default function account (state = {
+  GET_GROUPS_REQUEST,
+  GET_GROUPS_SUCCESS,
+  GET_GROUPS_FAILURE
+} from '../constants/ActionTypes'
+
+export default function groups (state = {
   isFetching: false,
   items: {}
 }, action) {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case GET_GROUPS_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
       })
-    case LOGIN_FAILURE:
+    case GET_GROUPS_FAILURE:
       console.error('error getting sheets:', action)
       return Object.assign({}, state, {
         isFetching: false,
         error: action.payload
       })
-    case LOGIN_SUCCESS:
-      if (!action.payload || !action.payload.results.timesheets) {
-        console.error('No timesheets found')
+    case GET_GROUPS_SUCCESS:
+      if (!action || !action.payload) {
+        console.error('No timesheets found', action)
         return state
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload.supplemental_data.users,
-        didInvalidate: false
+        items: action.payload.results.groups
       })
     default:
       return state
