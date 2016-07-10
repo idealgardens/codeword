@@ -3,9 +3,11 @@
   flex-basis: 28%;
   min-width: 4rem;
   margin-bottom: 3rem;
+  min-height: 15rem;
   @media (max-width: 768px) {
     flex-basis: 100%;
     min-width: 100%;
+    min-height: 25rem;
   }
 }
 .title {
