@@ -5,12 +5,12 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  height: 100%;
+  justify-content: center;
   width: 100%;
-  margin: .2rem;
+  font-size: 1.4rem;
 }
 .submit {
   display: -webkit-box;
