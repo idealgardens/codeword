@@ -42,6 +42,9 @@
   @media (max-width: 768px) {
     margin-left: 40%;
   }
+  @media (max-width: 667px) {
+    margin-left: 28%;
+  }
 }
 .graph {
   position: relative;
@@ -87,6 +90,9 @@
   position: absolute;
   top: 2.8rem;
   left: 3.2rem;
+  @media (max-width: 667px) {
+    left: 3rem;
+  }
 }
 .complete {
   position: absolute;
