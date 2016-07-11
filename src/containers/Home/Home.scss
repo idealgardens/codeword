@@ -51,9 +51,7 @@
   flex-wrap: wrap;
   flex: auto;
   @media (max-width: 768px) {
-    flex-direction: column;
     align-items: center;
-    min-height: 8rem;
   }
 }
 .progress {
