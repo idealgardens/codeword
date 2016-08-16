@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getTotals } from 'actions/totals'
+import { getTotals, getLocationTotals } from 'actions/totals'
 import { getGroups } from 'actions/groups'
-import { map } from 'lodash'
+import { map, toArray } from 'lodash'
 import { getCity } from '../../utils'
 import LocationSummaryTile from 'components/LocationSummaryTile/LocationSummaryTile'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -16,7 +16,9 @@ type Props = {
   groups: Object,
   isFetching: Boolean,
   getTotals: Function,
-  getGroups: Function
+  getGroups: Function,
+  getLocationTotals: Function,
+  locationTotals: Object
 }
 export default class Home extends Component {
   props: Props
@@ -25,21 +27,27 @@ export default class Home extends Component {
     if (!this.props.groups || !this.props.totals) {
       this.props.getGroups()
       this.props.getTotals()
+      // const jobCodes = [
+      //   43822,
+      //   43824,
+      //   43826
+      // ]
+      this.props.getLocationTotals(43822)
     }
   }
 
   render () {
-    const { totals, isFetching, groups } = this.props
-    // console.log('props:', {groups, totals})
+    const { totals, isFetching, groups, locationTotals } = this.props
     const locationList = map(totals, (total, key) => {
       if (key === '0') return // TODO: Show hours from outside of group
       const { city, initials } = getCity(groups[key].name.toUpperCase())
+      const totalVal = locationTotals[key] ? total / toArray(locationTotals[key]).length : total
       return (
         <LocationSummaryTile
           key={key}
           name={city}
           initials={initials}
-          total={total}
+          total={totalVal}
         />
       )
     })
@@ -68,9 +76,10 @@ export default class Home extends Component {
 // Place state of redux store into props of component
 const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
   {
-    router: router,
+    router,
     isFetching: sheets.isFetching || totals.isFetching,
     totals: totals.items.groups,
+    locationTotals: totals.items.locations,
     groups: groups.items,
     users: users.items,
     sheets: sheets.items
@@ -79,6 +88,6 @@ const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
 
 // Place action methods into props
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ getGroups, getTotals }, dispatch)
+  bindActionCreators({ getGroups, getTotals, getLocationTotals }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -24,6 +24,7 @@ app.use(bodyParser())
 
 app.use(route.get('/api/:resource', getCallTSheets))
 app.use(route.post('/api/report', getReport))
+app.use(route.post('/api/reports/payroll', getPayrollReport))
 
 function *getCallTSheets (resource) {
   if (!TSheets[resource]) return this.throw(`${resource} is not a resource. Check request.`, 404)
@@ -41,6 +42,14 @@ function *getReport () {
   if (!this.request.body) return this.throw('Query parameters required to build TSheets report', 400)
   yield TSheets.reports.getProjectReport(this.request.body)
     .then((apiRes) => this.body = apiRes)
+    .catch((error) => this.throw(error.message, error.code))
+}
+
+function *getPayrollReport () {
+  if (!this.request.body) return this.throw('Query parameters required to build TSheets report', 400)
+  console.log('this.request.body:', this.request.body)
+  yield TSheets.reports.getPayrollReport(this.request.body)
+    .then((apiRes) => this.body = apiRes.payroll_report)
     .catch((error) => this.throw(error.message, error.code))
 }
 
