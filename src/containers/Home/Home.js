@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getTotals, getLocationTotals } from 'actions/totals'
 import { getGroups } from 'actions/groups'
-import { map, toArray } from 'lodash'
+import { map } from 'lodash'
 import { getCity } from '../../utils'
 import LocationSummaryTile from 'components/LocationSummaryTile/LocationSummaryTile'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -26,28 +26,22 @@ export default class Home extends Component {
   componentDidMount () {
     if (!this.props.groups || !this.props.totals) {
       this.props.getGroups()
-      this.props.getTotals()
-      // const jobCodes = [
-      //   43822,
-      //   43824,
-      //   43826
-      // ]
-      this.props.getLocationTotals(43822)
+      this.props.getTotals('43822, 43824, 43826')
     }
   }
 
   render () {
-    const { totals, isFetching, groups, locationTotals } = this.props
+    const { totals, isFetching, groups } = this.props
+    // console.log('totals in view:', { totals, groups })
     const locationList = map(totals, (total, key) => {
       if (key === '0') return // TODO: Show hours from outside of group
       const { city, initials } = getCity(groups[key].name.toUpperCase())
-      const totalVal = locationTotals[key] ? total / toArray(locationTotals[key]).length : total
       return (
         <LocationSummaryTile
           key={key}
           name={city}
           initials={initials}
-          total={totalVal}
+          total={total}
         />
       )
     })
@@ -79,7 +73,6 @@ const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
     router,
     isFetching: sheets.isFetching || totals.isFetching,
     totals: totals.items.groups,
-    locationTotals: totals.items.locations,
     groups: groups.items,
     users: users.items,
     sheets: sheets.items
