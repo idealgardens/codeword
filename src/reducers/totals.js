@@ -3,6 +3,7 @@ import {
   GET_TOTALS_SUCCESS,
   GET_TOTALS_FAILURE
 } from '../constants/ActionTypes'
+
 export default function totals (state = {
   isFetching: false,
   items: {}
@@ -14,7 +15,7 @@ export default function totals (state = {
         didInvalidate: false
       })
     case GET_TOTALS_FAILURE:
-      console.error('error getting sheets:', action)
+      console.error('error getting sheets:', action) // eslint-disable-line no-console
       return Object.assign({}, state, {
         isFetching: false,
         status: action.payload.status,
@@ -27,7 +28,7 @@ export default function totals (state = {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.payload.totals
+        items: Object.assign({...state.items}, action.payload.totals)
       })
     default:
       return state

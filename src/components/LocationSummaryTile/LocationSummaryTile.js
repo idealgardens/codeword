@@ -31,7 +31,7 @@ export default class LocationSummaryTile extends Component {
       <Paper className={styles.container}>
         <Toolbar style={{backgroundColor: 'white'}}>
           <ToolbarTitle className={styles.title} text={name} />
-          <ToolbarGroup float='right'>
+          <ToolbarGroup>
             <FontIcon>
               <Link to={`/${camelCase(name)}`}>
                 <ClosedIcon />

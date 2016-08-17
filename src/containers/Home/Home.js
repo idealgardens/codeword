@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getTotals } from 'actions/totals'
+import { getTotals, getLocationTotals } from 'actions/totals'
 import { getGroups } from 'actions/groups'
 import { map } from 'lodash'
 import { getCity } from '../../utils'
@@ -16,7 +16,9 @@ type Props = {
   groups: Object,
   isFetching: Boolean,
   getTotals: Function,
-  getGroups: Function
+  getGroups: Function,
+  getLocationTotals: Function,
+  locationTotals: Object
 }
 export default class Home extends Component {
   props: Props
@@ -24,13 +26,13 @@ export default class Home extends Component {
   componentDidMount () {
     if (!this.props.groups || !this.props.totals) {
       this.props.getGroups()
-      this.props.getTotals()
+      this.props.getTotals('43822, 43824, 43826')
     }
   }
 
   render () {
     const { totals, isFetching, groups } = this.props
-    // console.log('props:', {groups, totals})
+    // console.log('totals in view:', { totals, groups })
     const locationList = map(totals, (total, key) => {
       if (key === '0') return // TODO: Show hours from outside of group
       const { city, initials } = getCity(groups[key].name.toUpperCase())
@@ -68,7 +70,7 @@ export default class Home extends Component {
 // Place state of redux store into props of component
 const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
   {
-    router: router,
+    router,
     isFetching: sheets.isFetching || totals.isFetching,
     totals: totals.items.groups,
     groups: groups.items,
@@ -79,6 +81,6 @@ const mapStateToProps = ({ router, sheets, totals, users, groups }) => (
 
 // Place action methods into props
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ getGroups, getTotals }, dispatch)
+  bindActionCreators({ getGroups, getTotals, getLocationTotals }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
