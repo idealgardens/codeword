@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 // Components
 import Navbar from 'components/Navbar/Navbar'
@@ -12,42 +12,56 @@ import styles from './App.scss'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
+// redux/firebase
+import { connect } from 'react-redux'
+import { firebase, helpers } from 'redux-firebasev3'
+const { pathToJS } = helpers
+
 type Props = {
   account: Object,
-  children: Array,
-  logout: Function
-}
+  firebase: Object,
+  children: Array
+};
+
+@firebase()
+@connect(
+  // Map state to props
+  ({firebase}) => ({
+    account: pathToJS(firebase, 'profile')
+  })
+)
 export default class Main extends Component {
   props: Props
 
   static childContextTypes = {
-    muiTheme: React.PropTypes.object
+    muiTheme: PropTypes.object
   }
 
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
   }
 
-  getChildContext = () => {
-    return {
+  getChildContext = () => (
+    {
       muiTheme: getMuiTheme(Theme)
     }
-  }
+  )
 
   handleClick = loc => {
     this.context.router.push(`/${loc}`)
   }
 
   handleLogout = () => {
-    this.props.logout()
+    this.props.firebase.logout()
     this.context.router.push('/')
   }
 
   render () {
+    const { account } = this.props
     return (
       <div className={styles.container}>
         <Navbar
-          account={this.props.account}
+          account={account}
           onMenuClick={this.handleClick}
           onLogoutClick={this.handleLogout}
         />

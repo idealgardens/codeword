@@ -1,81 +1,72 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-// components
-import LoginForm from 'components/LoginForm/LoginForm'
-
-// material-ui components
+// Components
+import LoginForm from '../../components/LoginForm/LoginForm'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
-import RaisedButton from 'material-ui/RaisedButton'
 
-// styles
 import styles from './Login.scss'
 
-// firebase
-import firebase from 'utils/firebase'
-type Props = {
+import { firebase, helpers } from 'redux-firebasev3'
+const { pathToJS, isLoaded } = helpers
 
-}
+type Props = {
+  account: Object,
+  authError: String,
+  firebase: Object
+};
+
+@firebase()
+@connect(
+  // Map state to props
+  ({firebase}) => ({
+    authError: pathToJS(firebase, 'authError'),
+    account: pathToJS(firebase, 'profile')
+  })
+)
 export default class Login extends Component {
   props: Props
 
-  state = {
-    snackCanOpen: false,
-    errors: { username: null, password: null },
-    errorMessage: null
+  static contextTypes = {
+    router: PropTypes.object.isRequired
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { authError } = nextProps
-    if (authError) {
-      this.setState({
-        isLoading: false
-      })
-    }
+  state = {
+    snackCanOpen: false
+  }
+
+  // componentWillReceiveProps (nextProps) {
+  //   // Redirect if logged in
+  //   // if (nextProps.account.username) {
+  //   //   this.context.router.push(`/${nextProps.account.username}`)
+  //   // }
+  // }
+
+  handleRequestClose = () =>
+    this.setState({
+      snackCanOpen: false
+    })
+
+  handleLogin = ({ email, password }) => {
+    this.setState({
+      snackCanOpen: true
+    })
+    this.props.firebase.login({ email, password })
+    this.context.router.push('/locations')
   }
 
   render () {
-    const { isLoading, snackCanOpen, errorMessage } = this.state
-    const handleLogin = loginData => {
-      this.setState({
-        snackCanOpen: true,
-        isLoading: true
-      })
-
-      const { email, password, provider } = loginData
-      let newState = {
-        isLoading: false,
-        errors: { username: null, email: null }
-      }
-      if (!provider && (!email || !password)) {
-        newState.errors.email = email ? 'Email is required' : null
-        newState.errors.password = password ? 'Password is required' : null
-        console.error('missing info', loginData, email, password)
-        return this.setState(newState)
-      }
-      if (email && password) {
-        firebase.auth()
-          .signInWithEmailAndPassword(email, password)
-          .catch((error) => {
-            if (error) {
-              console.error('Error logging in:', error)
-              newState.errorMessage = error.message || 'Error with login'
-            } else {
-              console.log('time to redirect or login?', error)
-            }
-            this.setState(newState)
-          })
-      }
-    }
-    const closeToast = () => this.setState({ snackCanOpen: false })
-
-    if (isLoading) {
+    const { account, authError } = this.props
+    const { snackCanOpen } = this.state
+    // Loading Spinner
+    if (!isLoaded(account)) {
       return (
-        <div className={styles.container}>
-          <div className={styles.progress}>
-            <CircularProgress color='#EB8C01' mode='indeterminate' />
+        <div className='Login'>
+          <div className='Login-Progress'>
+            <CircularProgress mode='indeterminate' />
           </div>
         </div>
       )
@@ -84,18 +75,10 @@ export default class Login extends Component {
     return (
       <div className={styles.container}>
         <Paper className={styles.panel}>
-          <LoginForm onLogin={handleLogin} />
+          <LoginForm onLogin={this.handleLogin} />
         </Paper>
-        <div className={styles.or}>
-          or
-        </div>
-        <RaisedButton
-          label='Sign in With Google'
-          secondary
-          onTouchTap={handleLogin.bind(this, { provider: 'google', type: 'popup' })}
-        />
         <div className={styles.signup}>
-          <span className={styles.label}>
+          <span className='Login-Signup-Label'>
             Need an account?
           </span>
           <Link className={styles.link} to='/signup'>
@@ -103,19 +86,16 @@ export default class Login extends Component {
           </Link>
         </div>
         {
-          errorMessage
-          ? (
-            <Snackbar
-              open={snackCanOpen && !!errorMessage}
-              message={errorMessage}
+          authError
+            ? <Snackbar
+              open={authError && snackCanOpen}
+              message={authError || 'Error'}
               action='close'
               autoHideDuration={3000}
-              onRequestClose={closeToast}
-            />
-            )
-          : null
+              onRequestClose={this.handleRequestClose}
+              />
+            : null
         }
-
       </div>
     )
   }

@@ -7,6 +7,7 @@ import clients from '../reducers/clients'
 import totals from '../reducers/totals'
 import groups from '../reducers/groups'
 import jobcodes from '../reducers/jobcodes'
+import { firebaseStateReducer as firebase } from 'redux-firebasev3'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -19,6 +20,7 @@ export const makeRootReducer = (asyncReducers) => {
     groups,
     router,
     jobcodes,
+    firebase,
     ...asyncReducers
   })
 }

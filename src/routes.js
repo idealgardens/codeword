@@ -7,6 +7,7 @@ import {
     Login,
     Signup,
     NotFound,
+    Locations,
     Location
   } from './containers'
 export default (store) => (
@@ -16,7 +17,8 @@ export default (store) => (
       <Route path='login' component={Login} />
       <Route path='signup' component={Signup} />
       <Route path='account' component={Account} />
-      <Route path=':locationName' component={Location} />
+      <Route path='locations' component={Locations} />
+      <Route path='locations/:locationName' component={Location} />
       <Route path='*' component={NotFound} />
     </Route>
   </Router>

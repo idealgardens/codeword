@@ -3,18 +3,28 @@ import React, { Component } from 'react'
 // styles
 import styles from './Account.scss'
 
-// firebase
-// import firebaseUtil from 'utils/firebase'
+// redux/firebase
+import { connect } from 'react-redux'
+import { firebase, helpers } from 'redux-firebasev3'
+const { pathToJS } = helpers
 
 type Props = {
   account: Object,
-  logout: Function
-}
+  firebase: Object
+};
+
+@firebase()
+@connect(
+  // Map state to props
+  ({firebase}) => ({
+    account: pathToJS(firebase, 'profile')
+  })
+)
 export default class Acccount extends Component {
   props: Props
 
   render () {
-    const { account, logout } = this.props
+    const { account, firebase } = this.props
     const emailTo = `mailto:${account.email || ''}`
     return (
       <div className={styles.container}>
@@ -31,7 +41,7 @@ export default class Acccount extends Component {
           <a className={`${styles.datapoint} ${styles.email}`} href={emailTo}>
             {account.email}
           </a>
-          <button className={styles.logout} onClick={logout}>
+          <button className={styles.logout} onClick={() => { firebase.logout() }}>
             Logout
           </button>
         </div>

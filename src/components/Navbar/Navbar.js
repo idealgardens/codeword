@@ -18,22 +18,25 @@ type Props = {
   account: Object,
   onMenuClick: Function,
   onLogoutClick: Function
-}
+};
+
 export class Navbar extends Component {
   props: Props
 
-  selectItem = (e, item) => {
+  selectItem = (item) => {
     if (item === 'logout' && this.props.onLogoutClick) {
       return this.props.onLogoutClick()
     }
-    if (this.props.onMenuClick) {
-      this.props.onMenuClick(item)
-    }
+    if (this.props.onMenuClick) this.props.onMenuClick(item)
   }
 
   render () {
-    const { username, avatar_url } = this.props.account ? this.props.account : {}
-    const brandLinkLoc = username ? `/${username}` : '/'
+    const { account } = this.props
+    const { username, avatar_url } = account || {}
+
+    const brandLinkLoc = username ? '/locations' : '/'
+
+    // Logged In Avatar
     const iconButton = (
       <Avatar
         className={styles.avatar}
@@ -41,27 +44,44 @@ export class Navbar extends Component {
         size={avatarSize}
       />
     )
+
+    // Logged out menu
     const mainMenu = (
       <div className={styles.menu}>
-        <FlatButton label='Sign Up' style={buttonStyle} onClick={this.selectItem.bind(this, null, 'signup')} />
-        <FlatButton label='Sign In' style={buttonStyle} onClick={this.selectItem.bind(this, null, 'login')} />
+        <FlatButton
+          label='Sign Up'
+          style={buttonStyle}
+          onClick={() => { this.selectItem('signup') }}
+        />
+        <FlatButton
+          label='Sign In'
+          style={buttonStyle}
+          onClick={() => { this.selectItem('login') }}
+        />
       </div>
     )
+
+    // Menu based on logged in status
     const rightMenu = username ? (
       <IconMenu
         iconButtonElement={iconButton}
         targetOrigin={originSettings}
         anchorOrigin={originSettings}
-        onChange={this.selectItem}
+        onChange={(e, item) => { this.selectItem(item) }}
       >
         <MenuItem primaryText='Account' value='account' />
         <MenuItem primaryText='About' value='about' />
         <MenuItem primaryText='Sign out' value='logout' />
       </IconMenu>
     ) : mainMenu
+
     return (
       <AppBar
-        title={<Link className={styles.brand} to={brandLinkLoc}>codeword</Link>}
+        title={
+          <Link className={styles.brand} to={brandLinkLoc}>
+            codeword
+          </Link>
+        }
         titleStyle={{color: '#EB8C01'}}
         className={styles.navbar}
         showMenuIconButton={false}
