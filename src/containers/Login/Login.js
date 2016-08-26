@@ -55,7 +55,7 @@ export default class Login extends Component {
       snackCanOpen: true
     })
     this.props.firebase.login({ email, password })
-    this.context.router.push('/')
+    this.context.router.push('/locations')
   }
 
   render () {
@@ -85,13 +85,17 @@ export default class Login extends Component {
             Sign Up
           </Link>
         </div>
-        <Snackbar
-          open={authError && snackCanOpen}
-          message={authError || 'Error'}
-          action='close'
-          autoHideDuration={3000}
-          onRequestClose={this.handleRequestClose}
-        />
+        {
+          authError
+            ? <Snackbar
+              open={authError && snackCanOpen}
+              message={authError || 'Error'}
+              action='close'
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestClose}
+              />
+            : null
+        }
       </div>
     )
   }

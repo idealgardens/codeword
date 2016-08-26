@@ -31,8 +31,12 @@ export class Navbar extends Component {
   }
 
   render () {
-    const { username, avatar_url } = this.props.account ? this.props.account : {}
+    const { account } = this.props
+    const { username, avatar_url } = account ? account : {}
+
     const brandLinkLoc = username ? '/locations' : '/'
+
+    // Logged In Avatar
     const iconButton = (
       <Avatar
         className={styles.avatar}
@@ -40,6 +44,8 @@ export class Navbar extends Component {
         size={avatarSize}
       />
     )
+
+    // Logged out menu
     const mainMenu = (
       <div className={styles.menu}>
         <FlatButton
@@ -54,6 +60,8 @@ export class Navbar extends Component {
         />
       </div>
     )
+
+    // Menu based on logged in status
     const rightMenu = username ? (
       <IconMenu
         iconButtonElement={iconButton}
@@ -66,9 +74,14 @@ export class Navbar extends Component {
         <MenuItem primaryText='Sign out' value='logout' />
       </IconMenu>
     ) : mainMenu
+
     return (
       <AppBar
-        title={<Link className={styles.brand} to={brandLinkLoc}>codeword</Link>}
+        title={
+          <Link className={styles.brand} to={brandLinkLoc}>
+            codeword
+          </Link>
+        }
         titleStyle={{color: '#EB8C01'}}
         className={styles.navbar}
         showMenuIconButton={false}
