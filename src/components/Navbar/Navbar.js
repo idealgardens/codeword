@@ -32,7 +32,7 @@ export class Navbar extends Component {
 
   render () {
     const { account } = this.props
-    const { username, avatar_url } = account ? account : {}
+    const { username, avatar_url } = account || {}
 
     const brandLinkLoc = username ? '/locations' : '/'
 
