@@ -24,7 +24,7 @@ type Props = {
   locationTotals: Object
 };
 
-class Locations extends Component {
+export class Locations extends Component {
   props: Props
 
   componentDidMount () {
