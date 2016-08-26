@@ -3,6 +3,8 @@ import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 import makeRootReducer from './reducers'
+import { firebase as fbConfig } from '../config'
+import { reduxFirebase } from 'redux-firebasev3'
 
 export default (initialState = {}, history) => {
   // ======================================================
@@ -29,6 +31,7 @@ export default (initialState = {}, history) => {
     initialState,
     compose(
       applyMiddleware(...middleware),
+      reduxFirebase(fbConfig, { userProfile: 'users' }),
       ...enhancers
     )
   )
