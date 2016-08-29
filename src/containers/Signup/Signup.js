@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
 // components
@@ -6,9 +6,10 @@ import SignupForm from 'components/SignupForm/SignupForm'
 
 // material-ui components
 import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
+
+import GoogleButton from 'react-google-button'
 
 // styles
 import styles from './Signup.scss'
@@ -35,10 +36,21 @@ type Props = {
 export default class Signup extends Component {
   props: Props
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
   state = {
     errors: { email: null, password: null },
     snackCanOpen: false,
     errorMessage: null
+  }
+
+  componentWillReceiveProps ({ account }) {
+    // Redirect if logged in
+    if (account && account.username) {
+      this.context.router.push('/locations')
+    }
   }
 
   reset = () =>
@@ -89,10 +101,8 @@ export default class Signup extends Component {
         <div className={styles.or}>
           or
         </div>
-        <RaisedButton
-          label='Sign in with Google'
-          secondary
-          onTouchTap={() => { firebase.login({ provider: 'google', type: 'popup' }) }}
+        <GoogleButton
+          onClick={() => { firebase.login({ provider: 'google', type: 'popup' }) }}
         />
         <div className={styles.login}>
           <span className='Signup-Login-Label'>
@@ -103,11 +113,11 @@ export default class Signup extends Component {
           </Link>
         </div>
         {
-          authError
+          authError && authError.message && snackCanOpen
           ? (
             <Snackbar
               open={authError && snackCanOpen}
-              message={authError || 'Signup error'}
+              message={authError.message || 'Signup error'}
               action='close'
               autoHideDuration={3000}
               onRequestClose={this.closeToast}

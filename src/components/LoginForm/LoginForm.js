@@ -64,7 +64,7 @@ export default class LoginForm extends Component {
       <form className={styles.form} onSubmit={this.handleLogin}>
         <TextField
           hintText='some@email.com'
-          floatingLabelText='Username/Email'
+          floatingLabelText='Email'
           onChange={this.handleInputChange.bind(this, 'email')}
           errorText={this.state.errors.email}
           style={fieldStyle}
