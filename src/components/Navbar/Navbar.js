@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
 import styles from './Navbar.scss'
+import Drawer from 'material-ui/Drawer'
 
 const stockPhotoUrl = 'https://s3.amazonaws.com/kyper-cdn/img/User.png'
 const originSettings = { horizontal: 'right', vertical: 'top' }
@@ -22,7 +23,9 @@ type Props = {
 
 export class Navbar extends Component {
   props: Props
-
+  state = {
+    menuOpen: false
+  }
   selectItem = (item) => {
     if (item === 'logout' && this.props.onLogoutClick) {
       return this.props.onLogoutClick()
@@ -76,6 +79,7 @@ export class Navbar extends Component {
     ) : mainMenu
 
     return (
+      <div>
       <AppBar
         title={
           <Link className={styles.brand} to={brandLinkLoc}>
@@ -83,10 +87,17 @@ export class Navbar extends Component {
           </Link>
         }
         titleStyle={{color: '#EB8C01'}}
+        iconStyleLeft={{color: '#EB8C01'}}
         className={styles.navbar}
         showMenuIconButton={false}
-        iconElementRight={rightMenu}
-      />
+        iconElementRight={rightMenu} />
+        <Drawer open={this.state.menuOpen}>
+         <MenuItem>Menu Item</MenuItem>
+         <MenuItem>Menu Item 2</MenuItem>
+       </Drawer>
+      </div>
+
+
     )
   }
 }

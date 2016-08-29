@@ -12,8 +12,14 @@
   font-size: 1.3em;
   font-weight: 400;
   text-transform: uppercase;
+  @media (max-width: 768px) {
+    font-size: .9rem;
+  }
   a {
     color: $primary !important;
+    &:visited {
+      color: $primary !important;
+    }
     &:hover {
       color: $secondary;
     }
@@ -23,5 +29,5 @@
 
 }
 .menu {
-  
+
 }

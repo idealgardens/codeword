@@ -64,8 +64,8 @@ export default class Login extends Component {
     // Loading Spinner
     if (!isLoaded(account)) {
       return (
-        <div className='Login'>
-          <div className='Login-Progress'>
+        <div className={styles.container}>
+          <div className={styles.progress}>
             <CircularProgress mode='indeterminate' />
           </div>
         </div>

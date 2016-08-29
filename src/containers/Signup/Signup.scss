@@ -12,6 +12,10 @@
   width: 100%;
   min-height: 530px;
   background-color: inherit;
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    padding-top: 1rem;
+  }
 }
 .panel {
   display: -webkit-box;
@@ -51,4 +55,13 @@
 }
 .progress {
   margin-top: 5rem;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
 }

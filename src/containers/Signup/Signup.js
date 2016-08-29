@@ -92,7 +92,7 @@ export default class Signup extends Component {
         <RaisedButton
           label='Sign in with Google'
           secondary
-          onTouchTap={() => { firebase.login({ provider: 'Google' }) }}
+          onTouchTap={() => { firebase.login({ provider: 'google', type: 'popup' }) }}
         />
         <div className={styles.login}>
           <span className='Signup-Login-Label'>
