@@ -7,21 +7,25 @@
   line-height: 1.3em;
   display: flex;
   box-sizing: border-box;
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    line-height: 1rem;
+  }
 }
 .brand {
   font-size: 1.3em;
   font-weight: 400;
   text-transform: uppercase;
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
   a {
     color: $primary !important;
+    &:visited {
+      color: $primary !important;
+    }
     &:hover {
       color: $secondary;
     }
   }
-}
-.avatar {
-
-}
-.menu {
-  
 }

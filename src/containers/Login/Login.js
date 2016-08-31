@@ -7,6 +7,7 @@ import LoginForm from '../../components/LoginForm/LoginForm'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
+import GoogleButton from 'react-google-button'
 
 import styles from './Login.scss'
 
@@ -38,12 +39,12 @@ export default class Login extends Component {
     snackCanOpen: false
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   // Redirect if logged in
-  //   // if (nextProps.account.username) {
-  //   //   this.context.router.push(`/${nextProps.account.username}`)
-  //   // }
-  // }
+  componentWillReceiveProps ({ account }) {
+    // Redirect if logged in
+    if (account && account.username) {
+      this.context.router.push('/locations')
+    }
+  }
 
   handleRequestClose = () =>
     this.setState({
@@ -55,17 +56,17 @@ export default class Login extends Component {
       snackCanOpen: true
     })
     this.props.firebase.login({ email, password })
-    this.context.router.push('/locations')
   }
 
   render () {
     const { account, authError } = this.props
     const { snackCanOpen } = this.state
+
     // Loading Spinner
     if (!isLoaded(account)) {
       return (
-        <div className='Login'>
-          <div className='Login-Progress'>
+        <div className={styles.container}>
+          <div className={styles.progress}>
             <CircularProgress mode='indeterminate' />
           </div>
         </div>
@@ -77,6 +78,12 @@ export default class Login extends Component {
         <Paper className={styles.panel}>
           <LoginForm onLogin={this.handleLogin} />
         </Paper>
+        <div className={styles.or}>
+          or
+        </div>
+        <GoogleButton
+          onClick={() => { firebase.login({ provider: 'google', type: 'popup' }) }}
+        />
         <div className={styles.signup}>
           <span className='Login-Signup-Label'>
             Need an account?
@@ -86,10 +93,10 @@ export default class Login extends Component {
           </Link>
         </div>
         {
-          authError
+          authError && authError.message
             ? <Snackbar
               open={authError && snackCanOpen}
-              message={authError || 'Error'}
+              message={authError.message || 'Error'}
               action='close'
               autoHideDuration={3000}
               onRequestClose={this.handleRequestClose}

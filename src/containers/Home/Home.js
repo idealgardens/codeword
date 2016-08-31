@@ -12,7 +12,7 @@ export default class Home extends Component {
           <span className={styles.welcome}>
             Welcome to the
           </span>
-          <div className={styles.row}>
+          <div className={styles.title}>
             <span className={styles.name}>
               Codeword
             </span>
