@@ -42,7 +42,7 @@ export default class Login extends Component {
   componentWillReceiveProps ({ account }) {
     // Redirect if logged in
     if (account && account.username) {
-      this.context.router.push(`/locations`)
+      this.context.router.push('/locations')
     }
   }
 
