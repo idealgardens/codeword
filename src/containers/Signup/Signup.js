@@ -9,8 +9,6 @@ import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
 
-import GoogleButton from 'react-google-button'
-
 // styles
 import styles from './Signup.scss'
 
@@ -79,7 +77,7 @@ export default class Signup extends Component {
   }
 
   render () {
-    const { account, firebase, authError } = this.props
+    const { account, authError } = this.props
     const { snackCanOpen } = this.state
 
     // Loading Spinner
@@ -98,14 +96,8 @@ export default class Signup extends Component {
         <Paper className={styles.panel}>
           <SignupForm onSignup={this.handleSignup} />
         </Paper>
-        <div className={styles.or}>
-          or
-        </div>
-        <GoogleButton
-          onClick={() => { firebase.login({ provider: 'google', type: 'popup' }) }}
-        />
         <div className={styles.login}>
-          <span className='Signup-Login-Label'>
+          <span className={styles.questionsLabel}>
             Already have an account?
           </span>
           <Link className={styles.link} to='/login'>
