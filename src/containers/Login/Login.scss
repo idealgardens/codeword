@@ -17,6 +17,7 @@
     padding-top: 1rem;
   }
 }
+
 .panel {
   display: -webkit-box;
   display: -moz-box;
@@ -31,10 +32,12 @@
   min-width: 250px;
   min-height: 270px;
 }
+
 .or {
   margin-top: .5rem;
   margin-bottom: .5rem;
 }
+
 .signup {
   display: -webkit-box;
   display: -moz-box;
@@ -46,19 +49,7 @@
   justify-content: center;
   margin-top: 1rem;
 }
-.link {
-  color: $linkBlue;
-  font-size: 1.2rem;
-  &:hover {
-    color: $materialBlue;
-  }
-}
-.label {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #979797;
-  font-weight: 400;
-}
+
 .progress {
   margin-top: 5rem;
   display: -webkit-box;

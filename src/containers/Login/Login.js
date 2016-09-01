@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import GoogleButton from 'react-google-button'
 
 // Components
 import LoginForm from '../../components/LoginForm/LoginForm'
@@ -40,7 +40,7 @@ export default class Login extends Component {
 
   componentWillReceiveProps ({ account }) {
     // Redirect if logged in
-    if (account && account.username) {
+    if (account && account.email) {
       this.context.router.push('/locations')
     }
   }
@@ -50,11 +50,14 @@ export default class Login extends Component {
       snackCanOpen: false
     })
 
-  handleLogin = ({ email, password }) => {
-    this.setState({
-      snackCanOpen: true
-    })
-    this.props.firebase.login({ email, password })
+  handleLogin = (loginData) => {
+    this.setState({ snackCanOpen: true })
+    this.props.firebase.login(loginData)
+  }
+
+  googleLogin = () => {
+    this.setState({ snackCanOpen: true })
+    this.props.firebase.login({ provider: 'google', type: 'popup' })
   }
 
   render () {
@@ -77,13 +80,11 @@ export default class Login extends Component {
         <Paper className={styles.panel}>
           <LoginForm onLogin={this.handleLogin} />
         </Paper>
-        <div className={styles.signup}>
-          <span className={styles.questionsLabel}>
-            Need an account?
-          </span>
-          <Link className={styles.link} to='/signup'>
-            Sign Up
-          </Link>
+        <div className={styles.or}>
+          <span>or</span>
+        </div>
+        <div className={styles.providers}>
+          <GoogleButton onClick={this.googleLogin} />
         </div>
         {
           authError && authError.message
