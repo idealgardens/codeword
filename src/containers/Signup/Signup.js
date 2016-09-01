@@ -46,7 +46,7 @@ export default class Signup extends Component {
 
   componentWillReceiveProps ({ account }) {
     // Redirect if logged in
-    if (account && account.username) {
+    if (account && account.email) {
       this.context.router.push('/locations')
     }
   }

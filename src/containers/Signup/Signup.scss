@@ -17,23 +17,26 @@
     padding-top: 1rem;
   }
 }
+
 .panel {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  padding: 1rem;
-  width: 30%;
-  min-width: 250px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  width: 30%;
+  min-width: 250px;
 }
+
 .or {
   margin-top: .5rem;
   margin-bottom: .5rem;
 }
+
 .login {
   display: flex;
   flex-direction:column;
@@ -41,20 +44,8 @@
   justify-content: center;
   margin-top: 2rem;
 }
-.login-Label {
-  font-size: 1rem;
-  font-weight: bold;
-  color: $mediumGray;
-  font-weight: 400;
-}
-.login-Link {
- margin-top: .4rem;
- &:hover {
-   color: $materialBlue;
- }
-}
+
 .progress {
-  margin-top: 5rem;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -63,5 +54,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  margin-top: 5rem;
   width: 100%;
 }
