@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "true",
+    "clients": {
+      ".write": "auth != null",
+      ".read": "true"
+    },
+    "tsheets": {
+      ".write": "true",
+      ".read": "true"
+    }
+  }
+}
