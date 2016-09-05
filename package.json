@@ -21,7 +21,8 @@
     "deploy:dev": "better-npm-run deploy:dev",
     "deploy:prod": "better-npm-run deploy:prod",
     "codecov": "cat coverage/*/lcov.info | codecov -t $CODECOV_TOKEN",
-    "prepush": "npm run lint:fix"
+    "prepush": "npm run lint:fix",
+    "fb": "node ./build/deploy"
   },
   "betterScripts": {
     "compile": {
