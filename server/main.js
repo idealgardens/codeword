@@ -1,69 +1,49 @@
-import Koa from 'koa'
-import convert from 'koa-convert'
-import route from 'koa-route'
-import webpack from 'webpack'
-import webpackConfig from '../build/webpack.config'
-import historyApiFallback from 'koa-connect-history-api-fallback'
-import serve from 'koa-static'
-import proxy from 'koa-proxy'
-import _debug from 'debug'
-import config from '../config'
-import webpackDevMiddleware from './middleware/webpack-dev'
-import webpackHMRMiddleware from './middleware/webpack-hmr'
-import * as TSheets from 'tsheets-sdk'
-import json from 'koa-json'
-import logger from 'koa-logger'
-import bodyParser from 'koa-bodyparser'
-
-const debug = _debug('app:server')
+const express = require('express')
+const debug = require('debug')('app:server')
+const webpack = require('webpack')
+const webpackConfig = require('../build/webpack.config')
+const config = require('../config')
+const TSheets = require('tsheets-sdk')
+const app = express()
+const bodyParser = require('body-parser')
 const paths = config.utils_paths
-const app = new Koa()
-app.use(json())
-app.use(logger())
-app.use(bodyParser())
+console.log('get report called:', TSheets)
 
-app.use(route.get('/api/:resource', getCallTSheets))
-app.use(route.post('/api/report', getReport))
-app.use(route.post('/api/reports/payroll', getPayrollReport))
-
-function *getCallTSheets (resource) {
-  if (!TSheets[resource]) return this.throw(`${resource} is not a resource. Check request.`, 404)
-  if (!this.query) return this.throw('Query parameters required to query TSheets', 400)
-  yield TSheets[resource].get(this.query)
-    .then((res) => this.body = res)
-    .catch((error) => this.throw(error.message, error.code))
-}
-// Enable koa-proxy if it has been enabled in the config.
-if (config.proxy && config.proxy.enabled) {
-  app.use(convert(proxy(config.proxy.options)))
+const getCallTSheets = (req, res) => {
+  if (!TSheets[req.params.resource]) {
+    return res.status(400).send(`${req.params.resource} is not a resource. Check request.`)
+  }
+  if (!req.query) return res.status(400).send('Query parameters required to query TSheets')
+  TSheets[req.params.resource].get(req.query)
+      .then(response => res.json(response))
+      .catch(error => res.status(error.code || 500).send(error.message))
 }
 
-function *getReport () {
-  if (!this.request.body) return this.throw('Query parameters required to build TSheets report', 400)
-  yield TSheets.reports.getProjectReport(this.request.body)
-    .then((apiRes) => this.body = apiRes)
-    .catch((error) => this.throw(error.message, error.code))
+const getReport = (req, res) => {
+  if (!req.body) return res.status(400).send('Query parameters required to build TSheets report')
+  TSheets.reports.getProjectReport(req.body)
+    .then((apiRes) => res.json(apiRes))
+    .catch((error) => res.status(error.code || 500).send(error.message))
 }
 
-function *getPayrollReport () {
-  if (!this.request.body) return this.throw('Query parameters required to build TSheets report', 400)
-  console.log('this.request.body:', this.request.body)
-  yield TSheets.reports.getPayrollReport(this.request.body)
-    .then((apiRes) => this.body = apiRes.payroll_report)
-    .catch((error) => this.throw(error.message, error.code))
+const getPayrollReport = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send('Query parameters required to build TSheets report')
+  }
+  TSheets.reports.getPayrollReport(req.body)
+    .then((apiRes) => res.json(apiRes.payroll_report))
+    .catch((error) => res.status(error.code || 500).send(error.message))
 }
-
-// Enable koa-proxy if it has been enabled in the config.
-if (config.proxy && config.proxy.enabled) {
-  app.use(convert(proxy(config.proxy.options)))
-}
+app.use(bodyParser.json()) // support json encoded bodies
 
 // This rewrites all routes requests to the root /index.html file
-// (ignoring file requests). If you want to implement isomorphic
+// (ignoring file requests). If you want to implement universal
 // rendering, you'll want to remove this middleware.
-app.use(convert(historyApiFallback({
-  verbose: false
-})))
+app.get('/api/:resource', getCallTSheets)
+app.post('/api/report', getReport)
+app.post('/api/reports/payroll', getPayrollReport)
+app.use(require('connect-history-api-fallback')())
+app.use(express.static(paths.client('static')))
 
 // ------------------------------------
 // Apply Webpack HMR Middleware
@@ -71,17 +51,22 @@ app.use(convert(historyApiFallback({
 if (config.env === 'development') {
   const compiler = webpack(webpackConfig)
 
-  // Enable webpack-dev and webpack-hot middleware
-  const { publicPath } = webpackConfig.output
-
-  app.use(webpackDevMiddleware(compiler, publicPath))
-  app.use(webpackHMRMiddleware(compiler))
+  debug('Enable webpack dev and HMR middleware')
+  app.use(require('webpack-dev-middleware')(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    contentBase: paths.client(),
+    hot: true,
+    quiet: config.compiler_quiet,
+    noInfo: config.compiler_quiet,
+    lazy: false,
+    stats: config.compiler_stats
+  }))
+  app.use(require('webpack-hot-middleware')(compiler))
 
   // Serve static assets from ~/src/static since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
-  app.use(serve(paths.client('static')))
 } else {
   debug(
     'Server is being run outside of live development mode, meaning it will ' +
@@ -94,7 +79,7 @@ if (config.env === 'development') {
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.
-  app.use(serve(paths.dist()))
+  app.use(express.static(paths.dist()))
 }
 
-export default app
+module.exports = app

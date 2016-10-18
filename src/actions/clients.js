@@ -6,17 +6,16 @@ import {
   UPDATE_CLIENT_REQUEST,
   UPDATE_CLIENT_FAILURE
 } from '../constants/ActionTypes'
-import { camelCase } from 'lodash'
-import { getFirebase } from 'utils/firebase'
-const firebase = getFirebase()
+// import { camelCase } from 'lodash'
 
 export function getClients () {
   return (dispatch, getState) => {
+    console.log('getState:', getState())
     dispatch(requestClients())
-    firebase.ref('clients').on('value', (snap) => {
-      // console.log('data from firebase:', snap.val())
-      dispatch(receiveClients(snap.val()))
-    }, (error) => dispatch(receiveClientsError(error)))
+    // firebase.ref('clients').on('value', (snap) => {
+    //   // console.log('data from firebase:', snap.val())
+    //   dispatch(receiveClients(snap.val()))
+    // }, (error) => dispatch(receiveClientsError(error)))
   }
 }
 export function requestClients (sheets) {
@@ -42,10 +41,10 @@ export function updateClient (client, scopedHours) {
   client.scopedHours = scopedHours
   return (dispatch, getState) => {
     dispatch(requestUpdateClient(client))
-    firebase.ref(`clients/${camelCase(client.name)}`).update(client, (error) => {
-      if (error) return dispatch(receiveClientUpdateError(error))
-      dispatch(receiveClientUpdate(client))
-    })
+    // firebase.ref(`clients/${camelCase(client.name)}`).update(client, (error) => {
+    //   if (error) return dispatch(receiveClientUpdateError(error))
+    //   dispatch(receiveClientUpdate(client))
+    // })
   }
 }
 export function requestUpdateClient (client) {

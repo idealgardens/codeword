@@ -1,0 +1,69 @@
+@import 'base';
+
+.container {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 4rem;
+  padding-bottom: 8rem;
+  flex-wrap: wrap;
+  @media (max-width: 768px) {
+    height: 100%;
+    margin-bottom: 3rem;
+    justify-content: flex-start;
+  }
+}
+.row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 8rem;
+  flex-wrap: wrap;
+  @media (max-width: 768px) {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+}
+.tiles {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex: auto;
+  @media (max-width: 768px) {
+    height: 100%;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+}
+.progress {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: auto;
+}

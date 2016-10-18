@@ -1,0 +1,114 @@
+@import 'base';
+
+.container {
+  flex-basis: 28%;
+  min-width: 4rem;
+  margin-bottom: 3rem;
+  min-height: 15rem;
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+    min-width: 100%;
+    min-height: 25rem;
+  }
+}
+.title {
+  color: $mediumGray;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.location {
+  display: flex;
+  flex-direction: column;
+}
+.name {
+  font-size: 2rem;
+}
+.diagram {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 12rem;
+  font-size: 1.5rem;
+  flex: auto;
+  // width: 100%;
+  // margin-left: 50%;
+  @media (min-width: 1500px) {
+    margin-left: 40%;
+  }
+  @media (max-width: 768px) {
+    margin-left: 40%;
+  }
+  @media (max-width: 667px) {
+    margin-left: 28%;
+  }
+}
+.graph {
+  position: relative;
+  width: 100%;
+}
+.underline {
+  float: left;
+  background-color: $background;
+  border-color: transparent;
+  border-radius: 2px;
+  width: 3rem;
+  height: 1px;
+  margin-left: 1rem;
+}
+.divider {
+  background-color: $mediumGray;
+  width: 1px;
+  border-radius: 3px;
+  height: 4rem;
+}
+.hours {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.hour {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: $mediumGray;
+  width: 50%;
+  font-weight: 100;
+}
+.time {
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.percentage {
+  position: absolute;
+  top: 2.8rem;
+  left: 3.2rem;
+  @media (max-width: 667px) {
+    left: 3rem;
+  }
+}
+.complete {
+  position: absolute;
+  top: 4.7rem;
+  left: 2.6rem;
+  font-size: .8rem;
+}
+.progress {
+  position: absolute;
+  left: -50px;
+  width: 100px;
+}
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}
